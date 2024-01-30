@@ -1,0 +1,12 @@
+.accordian_header {
+    cursor: pointer;
+}
+
+.paramsCollapsable{
+    position: relative;
+    left: -30px;
+}
+
+.ParametersList{
+    margin: 20px;
+}
