@@ -1,0 +1,5 @@
+FROM "nexcer/flutter-web"
+
+# install all needed stuff
+RUN apt-get update
+RUN apt-get install -y curl git unzip npm 

@@ -10,7 +10,7 @@ var proxy = require('http-proxy').createProxyServer({
 const { spawn } = require("child_process");
 let building = false;
 
-flutterProcess = spawn('cmd')
+flutterProcess = spawn('bash')
 flutterProcess.stdin.write('cd screen_renderer && flutter run -d web-server --web-port 9998\n')
 // flutterProcess.send('r')
 
