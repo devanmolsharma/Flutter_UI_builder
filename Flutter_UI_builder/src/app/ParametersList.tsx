@@ -5,15 +5,13 @@ import "./ParametersList.css"
 import Block from "./Block";
 
 
-type Props = { selectedBlock: Block };
+type Props = { selectedBlock: Block|undefined };
 type EnumList = { [key: string]: string[] };
 var enums: EnumList;
 
 
 
 export default function ParametersList({ selectedBlock }: Props) {
-
-    const selectedWidget  = selectedBlock.widget;
     const [accordionKey, setAccordionKey] = useState<string | null>(null);
 
     function ParseProps(widgetProperties: Properties, parentKey: string | null = null) {
@@ -81,12 +79,12 @@ export default function ParametersList({ selectedBlock }: Props) {
         );
     }, []);
 
-    return selectedWidget != null && (
+    return selectedBlock != null && (
         <div className="ParametersList">
-            <h1>{selectedWidget.name}</h1>
+            <h1>{selectedBlock.widget.name}</h1>
             <Col className="paramsCollapsable">
                 <Form>
-                    <ul>{ParseProps(selectedWidget.params)}</ul>
+                    <ul>{ParseProps(selectedBlock.widget.params)}</ul>
                 </Form>
             </Col>
         </div>

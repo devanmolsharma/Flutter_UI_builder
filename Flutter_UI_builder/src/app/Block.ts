@@ -2,8 +2,15 @@ export default class Block {
     protected static counter = 0;
     private _name: string;
     private _id: number;
-    private children: Block[] = [];
+    private _children: Block[] = [];
     private _widget: Widget;
+
+    public get children(): Block[] {
+        return this._children;
+    }
+    public set children(value: Block[]) {
+        this._children = value;
+    }
 
     constructor(widget: Widget, name = '', children?: Block[]) {
         this._name = name;
@@ -11,7 +18,7 @@ export default class Block {
         this._id = Block.counter;
 
         if (children) {
-            this.children = children;
+            this._children = children;
         }
 
         Block.counter++;
@@ -35,16 +42,24 @@ export default class Block {
         return this._id;
     }
 
+    public widgetParams() {
+        return this._widget.params?.filter((prop) => prop.type.class == "Widget")
+    }
+
+    public multipleWidgetsParams() {
+        return this._widget.params?.filter((prop) => prop.type.class == 'List<Widget>')
+    }
+
     public buildTree(): Widget {
         let copy = structuredClone(this.widget);
         copy.params?.forEach((param, i) => {
             if (param.type.class == 'Widget') {
-                const child = this.children.find((child) => child.name == param.name)
+                const child = this._children.find((child) => child.name == param.name)
                 if (child)
                     copy.params![i].value = child.buildTree()
             }
         })
-        
+
         return copy;
 
     }
