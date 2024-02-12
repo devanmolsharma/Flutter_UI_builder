@@ -1,12 +1,12 @@
 "use client"
-//references types='./types'
-import { useEffect, useState } from 'react';
-import WidgetList from './WidgetsList';
-import styles from './page.module.css'
-import Block from './Block';
 
+import styles from './page.module.css'
+
+import { useEffect, useState } from 'react';
 import { Container, Navbar } from 'react-bootstrap';
-import ParametersList from './ParametersList';
+
+import {WidgetsList} from './components/WidgetList/';
+import {ParametersList} from './components/ParamtersList';
 
 export default function Home() {
   const [widgets, setWidgets] = useState([] as Widget[]);
@@ -26,7 +26,7 @@ export default function Home() {
         </Container>
       </Navbar>
       <div className={styles.body}>
-        <div className={styles.section}><WidgetList widgets={widgets} setWidgets={setWidgets} onBlockSelected={(block)=>{
+        <div className={styles.section}><WidgetsList widgets={widgets} setWidgets={setWidgets} onBlockSelected={(block)=>{
           setSelectedBlock(block);
         }}/></div>
         <div className={styles.building_base}>
