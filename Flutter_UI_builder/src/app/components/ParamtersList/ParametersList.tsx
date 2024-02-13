@@ -2,11 +2,23 @@ import { useEffect, useState } from "react";
 import "bootstrap/dist/css/bootstrap.min.css"; // Import Bootstrap CSS
 import { Form, Col, Accordion } from "react-bootstrap"; // Import Bootstrap components as needed
 import "./ParametersList.css";
-
+/**
+ * TODOS:
+ * add switch for boolean parameters
+ * add a color selector 
+ * map parameter change to change values in actual Block
+ */
 let enums: EnumList;
 
 export function ParametersList({ selectedBlock }: ParamtersListProps) {
   const [accordionKey, setAccordionKey] = useState<string | null>(null);
+
+  function changeProp(id:string,value:null | string){
+    const postion_arr = id.split('_');
+    console.log(postion_arr);
+    
+
+  }
 
   function ParseProps(
     widgetProperties: Properties,

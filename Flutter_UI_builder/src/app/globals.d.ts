@@ -5,7 +5,7 @@ type Property = {
         "isFunction": boolean,
         "params": Property[] | null
     },
-    "default": null | string,
+    "value": null | string | Widget,
     "required": boolean,
     "enum": boolean
 };
