@@ -2,22 +2,49 @@ import { useEffect, useState } from "react";
 import "bootstrap/dist/css/bootstrap.min.css"; // Import Bootstrap CSS
 import { Form, Col, Accordion } from "react-bootstrap"; // Import Bootstrap components as needed
 import "./ParametersList.css";
+import Interpreter from "@/app/utils/Intepreter";
+
 /**
  * TODOS:
  * add switch for boolean parameters
- * add a color selector 
+ * add a color selector ( https://www.npmjs.com/package/react-colorful )
  * map parameter change to change values in actual Block
  */
+
 let enums: EnumList;
 
 export function ParametersList({ selectedBlock }: ParamtersListProps) {
   const [accordionKey, setAccordionKey] = useState<string | null>(null);
 
-  function changeProp(id:string,value:null | string){
-    const postion_arr = id.split('_');
-    console.log(postion_arr);
-    
+  function changeProp(id: string, value: null | string) {
+    const indices= id.split("_");
+    console.log(
+      setValue(
+        selectedBlock.widget.params.find(
+          (p: Property) => p.name == indices[0]
+        ),
+        indices.slice(1),
+        value
+      )
+    );
 
+    for (const param of selectedBlock.widget.params) {
+      console.log(Interpreter.convertPropertyJsonToCode(param));
+    }
+  }
+
+  function setValue(property: Property, ids: string[], value: string | null) {
+    if (ids.length == 0) {
+      property.value = value;
+    } else {
+      property.type.params?.map((_prop) => {
+        if (_prop.name == ids[0]) {
+          return setValue(_prop, ids.slice(1), value);
+        } else return _prop;
+      });
+    }
+
+    return property;
   }
 
   function ParseProps(
@@ -47,7 +74,7 @@ export function ParametersList({ selectedBlock }: ParamtersListProps) {
                 <b>{property.name}</b>
               </Accordion.Header>
               <Accordion.Body>
-                {renderPropertyInput(property)}
+                {renderPropertyInput(property, propertyKey)}
                 {property.type.params && property.type.params.length > 0 && (
                   <ul>{ParseProps(property.type.params, propertyKey)}</ul>
                 )}
@@ -61,14 +88,14 @@ export function ParametersList({ selectedBlock }: ParamtersListProps) {
     return jsxCode;
   }
 
-  function renderPropertyInput(property: Property) {
+  function renderPropertyInput(property: Property, key: string) {
     const elClass = property.type.class;
 
     let jxList = [];
 
     if (property.enum) {
       jxList.push(
-        <Form.Select>
+        <Form.Select onChange={(e) => changeProp(key, property.type.class+'.'+e.target.value)}>
           <option key="None">None/Custom</option>
           {enums[property.type.class].map((enumVal) => (
             <option key={enumVal}>{enumVal}</option>
@@ -80,7 +107,13 @@ export function ParametersList({ selectedBlock }: ParamtersListProps) {
     if (
       ["bool", "int", "double", "String"].indexOf(property.type.class) != -1
     ) {
-      jxList.push(<Form.Control id={property.name} type="text" />);
+      jxList.push(
+        <Form.Control
+          onChange={(e) => changeProp(key, e.target.value)}
+          id={property.name}
+          type="text"
+        />
+      );
     }
 
     if (elClass === "bool") {

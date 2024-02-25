@@ -42,13 +42,25 @@ class Block {
     return this._id;
   }
 
+  public simpleParams() {
+    return this._widget.params?.filter(
+      (prop) => prop.type.class != "List<Widget>" && prop.type.class != "Widget"
+    );
+  }
+
+  public widgetListParams() {
+    return this._widget.params?.filter(
+      (prop) => prop.type.class == "List<Widget>"
+    );
+  }
+
   public widgetParams(unset = false) {
     return this._widget.params?.filter((prop) => {
       if (prop.type.class == "Widget") {
         if (!unset) {
           return true;
         } else {
-          if (!(this._children.map((c) => c.name).includes(prop.name))) {
+          if (!this._children.map((c) => c.name).includes(prop.name)) {
             return true;
           }
         }

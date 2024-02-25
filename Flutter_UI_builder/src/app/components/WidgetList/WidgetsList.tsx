@@ -9,6 +9,7 @@ import {
 import "./widgetList.css";
 import Block from "@/app/Block";
 import AddWidgetDialog from "../AddWidgetDialog/AddWidgetDialog";
+import Interpreter from "@/app/utils/Intepreter";
 
 export function WidgetsList({
   widgets,
@@ -23,17 +24,51 @@ export function WidgetsList({
   let [baseBlock, setBaseBlock] = useState(new Block(Scaffold!, "Scaffold"));
   let [selectedBlock, setSelectedBlock] = useState<Block>();
   let [propname, setPropName] = useState("");
-  let [showDialog,setShowDialog] = useState(true);
+  let [showDialog, setShowDialog] = useState(true);
 
   function parseBlock(block: Block) {
+    let children = block.children;
+    let widgetParams = block.widgetListParams();
+
     return (
       <Accordion>
-        <AccordionHeader onClick={() => onBlockSelected(block)}>
+        <AccordionHeader
+          onClick={() => {
+            onBlockSelected(block);
+            if (selectedBlock)
+              console.log(Interpreter.compileBlock(selectedBlock));
+          }}
+        >
           {block.name} - {block.widget.name}
         </AccordionHeader>
 
         <AccordionBody>
-          {block.children.map((child) => parseBlock(child))}
+          {widgetParams?.map((param) => (
+            <Accordion>
+              <AccordionHeader>{param.name}</AccordionHeader>
+              <AccordionBody>
+                {children
+                  .filter((child) => child.name == param.name)
+                  .map((child) => parseBlock(child))}
+                <Button
+                  className="widgetPropAdd"
+                  onClick={() => {
+                    setPropName(param.name);
+                    setSelectedBlock(block);
+                    setShowDialog(true);
+                  }}
+                >
+                  + Widget
+                </Button>
+              </AccordionBody>
+            </Accordion>
+          ))}
+          {children
+            .filter(
+              (child) =>
+                !widgetParams?.map((param) => param.name).includes(child.name)
+            )
+            .map((child) => parseBlock(child))}
           {block.widgetParams(true)?.map((param) => (
             <Button
               className="widgetPropAdd"
@@ -59,13 +94,16 @@ export function WidgetsList({
     const temp = baseBlock;
     setBaseBlock(temp.clone());
     console.log(temp.buildTree());
-    
   }
 
   return (
     <div>
       {selectedBlock && (
-        <AddWidgetDialog onSubmit={(widget) => handleWidgetAddition(widget)} show={showDialog} setShow={setShowDialog}/>
+        <AddWidgetDialog
+          onSubmit={(widget) => handleWidgetAddition(widget)}
+          show={showDialog}
+          setShow={setShowDialog}
+        />
       )}
       <datalist id="widgets">
         {widgets.map((widget: any) => (
