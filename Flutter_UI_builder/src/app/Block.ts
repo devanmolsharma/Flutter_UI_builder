@@ -1,66 +1,45 @@
 class Block {
   protected static counter = 0;
-  private _name: string;
-  private _id: number;
-  private _children: Block[] = [];
-  private _widget: Widget;
-
-  public get children(): Block[] {
-    return this._children;
-  }
-  public set children(value: Block[]) {
-    this._children = value;
-  }
+  name: string;
+  id: number;
+  children: Block[] = [];
+  widget: Widget;
 
   constructor(widget: Widget, name = "", children?: Block[]) {
-    this._name = name;
-    this._widget = widget;
-    this._id = Block.counter;
+    this.name = name;
+    this.widget = widget;
+    this.id = Block.counter;
 
     if (children) {
-      this._children = children;
+      this.children = children;
     }
 
     Block.counter++;
   }
-  public get name(): string {
-    return this._name;
-  }
-  public set name(value: string) {
-    this._name = value;
-  }
 
-  public get widget(): Widget {
-    return this._widget;
-  }
-
-  public set widget(value: Widget) {
-    this._widget = value;
-  }
-
-  public get id(): number {
-    return this._id;
-  }
-
-  public simpleParams() {
-    return this._widget.params?.filter(
+  simpleParams() {    
+    return this.widget.params?.filter(
       (prop) => prop.type.class != "List<Widget>" && prop.type.class != "Widget"
     );
   }
 
-  public widgetListParams() {
-    return this._widget.params?.filter(
+  functionParams() {
+    return this.widget.params?.filter((prop) => prop.type.isFunction);
+  }
+
+  widgetListParams() {
+    return this.widget.params?.filter(
       (prop) => prop.type.class == "List<Widget>"
     );
   }
 
-  public widgetParams(unset = false) {
-    return this._widget.params?.filter((prop) => {
+  widgetParams(unset = false) {
+    return this.widget.params?.filter((prop) => {
       if (prop.type.class == "Widget") {
         if (!unset) {
           return true;
         } else {
-          if (!this._children.map((c) => c.name).includes(prop.name)) {
+          if (!this.children.map((c) => c.name).includes(prop.name)) {
             return true;
           }
         }
@@ -68,26 +47,26 @@ class Block {
     });
   }
 
-  public addChild(name: string, widget: Widget) {
+  addChild(name: string, widget: Widget) {
     const child = new Block(widget, name);
-    this._children.push(child);
+    this.children.push(child);
   }
 
-  public multipleWidgetsParams() {
-    return this._widget.params?.filter(
+  multipleWidgetsParams() {
+    return this.widget.params?.filter(
       (prop) => prop.type.class == "List<Widget>"
     );
   }
 
-  public clone() {
-    return new Block(this._widget, this._name, this._children);
+  clone() {
+    return new Block(this.widget, this.name, this.children);
   }
 
-  public buildTree(): Widget {
+  buildTree(): Widget {
     let copy = structuredClone(this.widget);
     copy.params?.forEach((param, i) => {
       if (param.type.class == "Widget") {
-        const child = this._children.find((child) => child.name == param.name);
+        const child = this.children.find((child) => child.name == param.name);
         if (child) copy.params![i].value = child.buildTree();
       }
     });

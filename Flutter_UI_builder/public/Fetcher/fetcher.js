@@ -205,7 +205,9 @@ let parser = new DOMParser();
 const skipClasses = ['Key', 'BuildContext', 'DiagnosticLevel', 'DiagnosticsTreeStyle'];
 
 // Function to parse a parameter
-async function parseParam(param, recursion) {
+async function parseParam(param, recursion,allStr) {
+    let positionals = allStr.split('{')[0];
+    
     if (param.includes("Deprecated") || param.includes("→") || param.length < 4) {
         return null;
     }
@@ -243,16 +245,17 @@ async function parseParam(param, recursion) {
     parsedType.params = subParams;
 
     let defaultVal = param.includes("=") ? splittedParam[3] : null;
-    if(parsedType.isFunction && required && (defaultVal == null)){
+    if (parsedType.isFunction && required && (defaultVal == null)) {
         defaultVal = "()=>{}"
     }
 
     // Return parsed parameter information
-    if ((isEnum) || (isPrimaryType) || (subParams && (subParams.length > 0)))
+    if ((isEnum) || (isPrimaryType) || parsedType.isFunction || (subParams && (subParams.length > 0)))
         return {
             name: splittedParam[1],
             type: parsedType,
-            default: defaultVal,
+            value: defaultVal,
+            positional:positionals.includes(splittedParam[1]),
             required: required,
             enum: isEnum,
         }
@@ -274,11 +277,14 @@ async function parseClass(name, recursion = 3) {
             // Parse HTML document and extract parameter information
             doc = parser.parseFromString(await res.text(), 'text/html');
             let j = [];
-            doc.querySelectorAll(`#${name} .parameter`).forEach((E, i) => j[i] = E.innerText.split(',')[0])
+            let allStr = doc.querySelector(`#${name}`).innerText;
+            doc.querySelectorAll(`#${name} .parameter`).forEach((E, i) => {
+                j[i] = E.innerText.split(',')[0]
+            })
 
             let filtered = [];
             for (let i = 0; i < j.length; i++) {
-                let param = await parseParam(j[i], recursion);
+                let param = await parseParam(j[i], recursion,allStr);
                 if (param != null) {
                     filtered.push(param);
                 }
@@ -342,13 +348,13 @@ async function getAttributes() {
             try {
                 params = await parseClass(name);
                 // Parse class and store the result in elementParameterMap
-                params && elementParameterMap.push({ name: name, params:  params});
+                params && elementParameterMap.push({ name: name, params: params });
             } catch (error) {
                 // Handle errors during parsing
             }
-            count ++;
+            count++;
 
-            console.log(count+'/' +total+ "done");
+            console.log(count + '/' + total + "done");
         }
     )
 }

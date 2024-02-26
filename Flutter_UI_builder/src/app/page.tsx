@@ -9,7 +9,6 @@ import { WidgetsList } from "./components/WidgetList/";
 import { ParametersList } from "./components/ParamtersList";
 
 import Block from "./Block";
-import AddWidgetDialog from "./components/AddWidgetDialog/AddWidgetDialog";
 
 export default function Home() {
   const [widgets, setWidgets] = useState([] as Widget[]);
@@ -41,7 +40,7 @@ export default function Home() {
           />
         </div>
         <div className={styles.building_base}>
-          <iframe src="http://localhost:8080/"></iframe>
+          <iframe id="flutterview" src="http://localhost:9998/"></iframe>
         </div>
         <div className={styles.section}>
           <ParametersList selectedBlock={selectedBlock} />

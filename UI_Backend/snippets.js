@@ -1,4 +1,4 @@
-
+exports.pre = `
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
@@ -28,6 +28,9 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   @override
-  Widget build(BuildContext context) { return Scaffold(body:Center(child:Text('Hello World!',),),floatingActionButton:FloatingActionButton(child:Icon(Icons.abc_sharp,),mini : false,clipBehavior : Clip.none,focusNode : FocusNode(skipTraversal : false,canRequestFocus : true,descendantsAreFocusable : true,descendantsAreTraversable : true),autofocus : false,isExtended : false,onPressed:()=>{},),persistentFooterAlignment : AlignmentDirectional.centerEnd,primary : true,drawerDragStartBehavior : DragStartBehavior.start,extendBody : false,extendBodyBehindAppBar : false,drawerEnableOpenDragGesture : true,endDrawerEnableOpenDragGesture : true,);
+  Widget build(BuildContext context) { return `
+
+
+exports.post =   `;
   }
-}
+}`

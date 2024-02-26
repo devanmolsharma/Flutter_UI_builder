@@ -17,16 +17,19 @@ export function ParametersList({ selectedBlock }: ParamtersListProps) {
   const [accordionKey, setAccordionKey] = useState<string | null>(null);
 
   function changeProp(id: string, value: null | string) {
-    const indices= id.split("_");
-    console.log(
-      setValue(
-        selectedBlock.widget.params.find(
-          (p: Property) => p.name == indices[0]
-        ),
-        indices.slice(1),
-        value
-      )
-    );
+    const indices = id.split("_");
+    let newParams = selectedBlock.widget.params.map((p: Property) => {
+      if (p.name == indices[0]) {
+        return setValue(p, indices.slice(1), value);
+      }
+      else return p;
+    });
+
+    const wid = selectedBlock.widget;
+    wid.params = newParams;
+
+    selectedBlock.widget = wid;
+    
 
     for (const param of selectedBlock.widget.params) {
       console.log(Interpreter.convertPropertyJsonToCode(param));
@@ -95,7 +98,14 @@ export function ParametersList({ selectedBlock }: ParamtersListProps) {
 
     if (property.enum) {
       jxList.push(
-        <Form.Select onChange={(e) => changeProp(key, property.type.class+'.'+e.target.value)}>
+        <Form.Select
+          defaultValue={
+            (property.value && (property.value as string).split(".")[1]) ?? ""
+          }
+          onChange={(e) =>
+            changeProp(key, property.type.class + "." + e.target.value)
+          }
+        >
           <option key="None">None/Custom</option>
           {enums[property.type.class].map((enumVal) => (
             <option key={enumVal}>{enumVal}</option>

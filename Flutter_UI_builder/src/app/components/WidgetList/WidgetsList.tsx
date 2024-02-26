@@ -35,8 +35,7 @@ export function WidgetsList({
         <AccordionHeader
           onClick={() => {
             onBlockSelected(block);
-            if (selectedBlock)
-              console.log(Interpreter.compileBlock(selectedBlock));
+            console.log(Interpreter.compileBlock(block));
           }}
         >
           {block.name} - {block.widget.name}
@@ -105,6 +104,30 @@ export function WidgetsList({
           setShow={setShowDialog}
         />
       )}
+
+      <button
+        onClick={() => {
+          let compiled = Interpreter.compileBlock(baseBlock);
+          fetch("http://localhost:8080/update", {
+            method: "post",
+            headers: { "Content-type": "application/json" },
+            body: JSON.stringify({
+              newCode: compiled,
+            }),
+          });
+
+          fetch("http://localhost:8080/render").then((_) => {
+            setTimeout(() => {
+              var iframe = document.getElementById(
+                "flutterview"
+              ) as HTMLIFrameElement;
+              iframe.src = iframe.src;
+            }, 2000);
+          });
+        }}
+      >
+        Compile!
+      </button>
       <datalist id="widgets">
         {widgets.map((widget: any) => (
           <option>{widget.name}</option>
