@@ -1,6 +1,6 @@
 import Block from "../Block";
 
-class Interpreter {
+class Compiler {
   static basicTypes = [
     "bool",
     "int",
@@ -19,16 +19,16 @@ class Interpreter {
     const name = prop.name;
     const value = prop.value;
 
-    if (Interpreter.basicTypes.indexOf(prop.type.class) != -1 || prop.enum) {
+    if (Compiler.basicTypes.indexOf(prop.type.class) != -1 || prop.enum) {
       if (!value) {
         return "null";
       }
 
       if (prop.positional) {
-        return `${Interpreter.format(value as string, prop.type.class)}`;
+        return `${Compiler.format(value as string, prop.type.class)}`;
       }
 
-      return `${name} : ${Interpreter.format(
+      return `${name} : ${Compiler.format(
         value as string,
         prop.type.class
       )}`;
@@ -70,7 +70,7 @@ class Interpreter {
     });
 
     simpleParams?.forEach((param) => {
-      let compiledProp = Interpreter.convertPropertyJsonToCode(param);
+      let compiledProp = Compiler.convertPropertyJsonToCode(param);
 
       if (compiledProp != "null") {
         base += compiledProp;
@@ -89,4 +89,4 @@ class Interpreter {
   }
 }
 
-export default Interpreter;
+export default Compiler;

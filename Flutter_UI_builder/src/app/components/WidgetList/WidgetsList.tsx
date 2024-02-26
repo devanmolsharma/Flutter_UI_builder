@@ -9,7 +9,8 @@ import {
 import "./widgetList.css";
 import Block from "@/app/Block";
 import AddWidgetDialog from "../AddWidgetDialog/AddWidgetDialog";
-import Interpreter from "@/app/utils/Intepreter";
+import Compiler from "@/app/utils/Compiler";
+import config from "@/app/config";
 
 export function WidgetsList({
   widgets,
@@ -35,7 +36,7 @@ export function WidgetsList({
         <AccordionHeader
           onClick={() => {
             onBlockSelected(block);
-            console.log(Interpreter.compileBlock(block));
+            console.log(Compiler.compileBlock(block));
           }}
         >
           {block.name} - {block.widget.name}
@@ -107,8 +108,8 @@ export function WidgetsList({
 
       <button
         onClick={() => {
-          let compiled = Interpreter.compileBlock(baseBlock);
-          fetch("http://localhost:8080/update", {
+          let compiled = Compiler.compileBlock(baseBlock);
+          fetch(config.host + ":8080/update", {
             method: "post",
             headers: { "Content-type": "application/json" },
             body: JSON.stringify({
@@ -116,14 +117,16 @@ export function WidgetsList({
             }),
           });
 
-          fetch("http://localhost:8080/render").then((_) => {
-            setTimeout(() => {
-              var iframe = document.getElementById(
-                "flutterview"
-              ) as HTMLIFrameElement;
-              iframe.src = iframe.src;
-            }, 2000);
-          });
+          setTimeout(() => {
+            fetch(config.host + ":8080/render").then((_) => {
+              setTimeout(() => {
+                var iframe = document.getElementById(
+                  "flutterview"
+                ) as HTMLIFrameElement;
+                iframe.src = iframe.src;
+              }, 2000);
+            });
+          }, 2000);
         }}
       >
         Compile!

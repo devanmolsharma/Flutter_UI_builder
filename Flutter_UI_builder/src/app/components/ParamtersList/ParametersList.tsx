@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import "bootstrap/dist/css/bootstrap.min.css"; // Import Bootstrap CSS
 import { Form, Col, Accordion } from "react-bootstrap"; // Import Bootstrap components as needed
 import "./ParametersList.css";
-import Interpreter from "@/app/utils/Intepreter";
 
 /**
  * TODOS:
@@ -29,11 +28,6 @@ export function ParametersList({ selectedBlock }: ParamtersListProps) {
     wid.params = newParams;
 
     selectedBlock.widget = wid;
-    
-
-    for (const param of selectedBlock.widget.params) {
-      console.log(Interpreter.convertPropertyJsonToCode(param));
-    }
   }
 
   function setValue(property: Property, ids: string[], value: string | null) {
