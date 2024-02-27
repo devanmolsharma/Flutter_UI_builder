@@ -1,14 +1,17 @@
 const snippets = require('./snippets.js')
 const express = require('express');
+const { spawn, exec } = require("child_process");
+var cors = require('cors');
+const fs = require('fs');
 
 const app = express();
-var cors = require('cors');
 const port = 8080;
-const fs = require('fs');
+
+
+
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-const { spawn } = require("child_process");
 let building = false;
 
 flutterProcess = spawn('bash')
@@ -31,6 +34,15 @@ app.get('/render', (req, res) => {
         res.end()
     }, 1000);
 
+});
+
+app.get('/build/:type', (req, res) => {
+    let type = req.params.type || 'web';
+    exec(`cd screen_renderer && rm -rf build && flutter build ${type} && zip -r build build`, (_, out, err) => {
+        res.status(err ? 500 : 200)
+        console.log(out,err);
+        res.download('screen_renderer/build.zip')
+    })
 });
 
 app.post('/update', (req, res) => {

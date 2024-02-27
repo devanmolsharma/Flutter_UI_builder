@@ -42,7 +42,7 @@ export default function Home() {
           />
         </div>
         <div className={styles.building_base}>
-          <iframe id="flutterview" src={`${config}:9998/`}></iframe>
+          <iframe id="flutterview" src={`${config.host}:9998/`}></iframe>
         </div>
         <div className={styles.section}>
           <ParametersList selectedBlock={selectedBlock} />

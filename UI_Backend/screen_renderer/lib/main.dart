@@ -1,9 +1,9 @@
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 
 import 'package:flutter/material.dart';
+
 void main() {
   runApp(const MyApp());
 }
@@ -28,6 +28,58 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   @override
-  Widget build(BuildContext context) { return Scaffold(body:Center(child:Text('Hello World!',),),floatingActionButton:FloatingActionButton(child:Icon(Icons.abc_sharp,),mini : false,clipBehavior : Clip.none,focusNode : FocusNode(skipTraversal : false,canRequestFocus : true,descendantsAreFocusable : true,descendantsAreTraversable : true),autofocus : false,isExtended : false,onPressed:()=>{},),persistentFooterAlignment : AlignmentDirectional.centerEnd,primary : true,drawerDragStartBehavior : DragStartBehavior.start,extendBody : false,extendBodyBehindAppBar : false,drawerEnableOpenDragGesture : true,endDrawerEnableOpenDragGesture : true,);
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: Column(
+        children: [
+          TextButton(
+            child: Text(
+              'Hola!',
+            ),
+            focusNode: FocusNode(
+                skipTraversal: false,
+                canRequestFocus: true,
+                descendantsAreFocusable: true,
+                descendantsAreTraversable: true),
+            autofocus: false,
+            clipBehavior: Clip.none,
+            isSemanticButton: true,
+            onPressed: () => {},
+          ),
+          Divider(),
+          IconButton(
+            icon: Icon(
+              Icons.access_alarms,
+            ),
+            focusNode: FocusNode(
+                skipTraversal: false,
+                canRequestFocus: true,
+                descendantsAreFocusable: true,
+                descendantsAreTraversable: true),
+            autofocus: false,
+            constraints: BoxConstraints(
+                minWidth: 0.0,
+                maxWidth: double.infinity,
+                minHeight: 0.0,
+                maxHeight: double.infinity),
+            onPressed: () => {},
+          ),
+        ],
+        mainAxisAlignment: MainAxisAlignment.start,
+        mainAxisSize: MainAxisSize.max,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        verticalDirection: VerticalDirection.down,
+      ),
+      floatingActionButton: Icon(
+        Icons.access_alarms,
+      ),
+      persistentFooterAlignment: AlignmentDirectional.centerEnd,
+      primary: true,
+      drawerDragStartBehavior: DragStartBehavior.start,
+      extendBody: false,
+      extendBodyBehindAppBar: false,
+      drawerEnableOpenDragGesture: true,
+      endDrawerEnableOpenDragGesture: true,
+    );
   }
 }

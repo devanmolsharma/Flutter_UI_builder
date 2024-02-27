@@ -1,0 +1,34 @@
+    1  node app.js
+    2  cd screen_renderer/
+    3  flutter build -h
+    4  flutter build linux
+    5  apt install cmake
+    6  flutter build linux
+    7  apt install ninja
+    8  apt install ninja-build
+    9  flutter build linux
+   10  apt install clang++
+   11* 
+   12  clang
+   13  apt install clang-3.8
+   14  apt install lang-3.n
+   15  apt install clang-tools-10
+   16  apt install clang-tools
+   17  flutter build linux
+   18  apt update
+   19  apt upgrade
+   20  apt install clang
+   21  flutter build linux
+   22* flutter build linux
+   23  apt install pkg-config
+   24  flutter build linux
+   25  sudo apt-get install libvlccore-dev
+   26  sudo apt-get install libvlc-dev
+   27  flutter build linux
+   28  sudo apt-get install  gtk glib gio
+   29  sudo apt-get install  gtk+-3.0 glib gio
+   30  sudo apt-get install  gtk+-3.0 glib-2.0 gio-2.0
+   31  flutter build linux
+   32  history
+   33  cd ..
+   34  history > commands.txt

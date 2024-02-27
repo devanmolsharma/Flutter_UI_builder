@@ -105,7 +105,6 @@ export function WidgetsList({
           setShow={setShowDialog}
         />
       )}
-
       <button
         onClick={() => {
           let compiled = Compiler.compileBlock(baseBlock);
@@ -131,12 +130,43 @@ export function WidgetsList({
       >
         Compile!
       </button>
+      Build:{" "}
+      <select>
+        <option>Choose</option>
+        <option
+          onClick={() => {
+            location.href = config.host + ":8080/build/apk";
+          }}
+        >
+          Apk
+        </option>
+        <option
+          onClick={() => {
+            location.href = config.host + ":8080/build/aab";
+          }}
+        >
+          Aab
+        </option>
+        <option
+          onClick={() => {
+            location.href = config.host + ":8080/build/linux";
+          }}
+        >
+          Linux
+        </option>
+        <option
+          onClick={() => {
+            location.href = config.host + ":8080/build/web";
+          }}
+        >
+          Web
+        </option>
+      </select>
       <datalist id="widgets">
         {widgets.map((widget: any) => (
           <option>{widget.name}</option>
         ))}
       </datalist>
-
       {parseBlock(baseBlock)}
     </div>
   );
