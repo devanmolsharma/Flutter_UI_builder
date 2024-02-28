@@ -1,4 +1,11 @@
 {
+  "VisualDensity": [
+    "comfortable",
+    "compact",
+    "maximumDensity",
+    "minimumDensity",
+    "standard"
+  ],
   "double": [
     "infinity",
     "maxFinite",
@@ -6,12 +13,74 @@
     "nan",
     "negativeInfinity"
   ],
-  "VisualDensity": [
-    "comfortable",
-    "compact",
-    "maximumDensity",
-    "minimumDensity",
-    "standard"
+  "MaterialTapTargetSize": [
+    "padded",
+    "shrinkWrap"
+  ],
+  "Duration": [
+    "hoursPerDay",
+    "microsecondsPerDay",
+    "microsecondsPerHour",
+    "microsecondsPerMillisecond",
+    "microsecondsPerMinute",
+    "microsecondsPerSecond",
+    "millisecondsPerDay",
+    "millisecondsPerHour",
+    "millisecondsPerMinute",
+    "millisecondsPerSecond",
+    "minutesPerDay",
+    "minutesPerHour",
+    "secondsPerDay",
+    "secondsPerHour",
+    "secondsPerMinute",
+    "zero"
+  ],
+  "Clip": [
+    "none",
+    "hardEdge",
+    "antiAlias",
+    "antiAliasWithSaveLayer"
+  ],
+  "EdgeInsetsGeometry": [
+    "infinity"
+  ],
+  "TextDecoration": [
+    "lineThrough",
+    "none",
+    "overline",
+    "underline"
+  ],
+  "TextDecorationStyle": [
+    "solid",
+    "double",
+    "dotted",
+    "dashed",
+    "wavy"
+  ],
+  "FontWeight": [
+    "bold",
+    "normal",
+    "w100",
+    "w200",
+    "w300",
+    "w400",
+    "w500",
+    "w600",
+    "w700",
+    "w800",
+    "w900"
+  ],
+  "FontStyle": [
+    "normal",
+    "italic"
+  ],
+  "TextBaseline": [
+    "alphabetic",
+    "ideographic"
+  ],
+  "TextLeadingDistribution": [
+    "proportional",
+    "even"
   ],
   "MainAxisAlignment": [
     "start",
@@ -21,9 +90,194 @@
     "spaceAround",
     "spaceEvenly"
   ],
+  "OverflowBarAlignment": [
+    "start",
+    "end",
+    "center"
+  ],
+  "VerticalDirection": [
+    "up",
+    "down"
+  ],
+  "EdgeInsets": [
+    "zero"
+  ],
+  "CrossFadeState": [
+    "showFirst",
+    "showSecond"
+  ],
+  "TextAlign": [
+    "left",
+    "right",
+    "center",
+    "justify",
+    "start",
+    "end"
+  ],
+  "TextOverflow": [
+    "clip",
+    "fade",
+    "ellipsis",
+    "visible"
+  ],
+  "TextWidthBasis": [
+    "parent",
+    "longestLine"
+  ],
   "Axis": [
     "horizontal",
     "vertical"
+  ],
+  "BoxShape": [
+    "rectangle",
+    "circle"
+  ],
+  "BorderRadius": [
+    "zero"
+  ],
+  "Rect": [
+    "largest",
+    "zero"
+  ],
+  "SystemUiOverlayStyle": [
+    "dark",
+    "light"
+  ],
+  "Brightness": [
+    "dark",
+    "light"
+  ],
+  "OptionsViewOpenDirection": [
+    "up",
+    "down"
+  ],
+  "TextEditingValue": [
+    "empty"
+  ],
+  "TextAffinity": [
+    "upstream",
+    "downstream"
+  ],
+  "TextRange": [
+    "empty"
+  ],
+  "BlendMode": [
+    "clear",
+    "src",
+    "dst",
+    "srcOver",
+    "dstOver",
+    "srcIn",
+    "dstIn",
+    "srcOut",
+    "dstOut",
+    "srcATop",
+    "dstATop",
+    "xor",
+    "plus",
+    "modulate",
+    "screen",
+    "overlay",
+    "darken",
+    "lighten",
+    "colorDodge",
+    "colorBurn",
+    "hardLight",
+    "softLight",
+    "difference",
+    "exclusion",
+    "multiply",
+    "hue",
+    "saturation",
+    "color",
+    "luminosity"
+  ],
+  "Offset": [
+    "infinite",
+    "zero"
+  ],
+  "AnimationBehavior": [
+    "normal",
+    "preserve"
+  ],
+  "BottomNavigationBarType": [
+    "fixed",
+    "shifting"
+  ],
+  "MouseCursor": [
+    "defer",
+    "uncontrolled"
+  ],
+  "BottomNavigationBarLandscapeLayout": [
+    "spread",
+    "centered",
+    "linear"
+  ],
+  "BorderSide": [
+    "none",
+    "strokeAlignCenter",
+    "strokeAlignInside",
+    "strokeAlignOutside"
+  ],
+  "BorderStyle": [
+    "none",
+    "solid"
+  ],
+  "StrokeCap": [
+    "butt",
+    "round",
+    "square"
+  ],
+  "MainAxisSize": [
+    "min",
+    "max"
+  ],
+  "CrossAxisAlignment": [
+    "start",
+    "end",
+    "center",
+    "stretch",
+    "baseline"
+  ],
+  "TextDirection": [
+    "LTR",
+    "RTL",
+    "UNKNOWN"
+  ],
+  "CupertinoDatePickerMode": [
+    "time",
+    "date",
+    "dateAndTime",
+    "monthYear"
+  ],
+  "DateTime": [
+    "april",
+    "august",
+    "daysPerWeek",
+    "december",
+    "february",
+    "friday",
+    "january",
+    "july",
+    "june",
+    "march",
+    "may",
+    "monday",
+    "monthsPerYear",
+    "november",
+    "october",
+    "saturday",
+    "september",
+    "sunday",
+    "thursday",
+    "tuesday",
+    "wednesday"
+  ],
+  "DatePickerDateOrder": [
+    "dmy",
+    "mdy",
+    "ymd",
+    "ydm"
   ],
   "BoxFit": [
     "fill",
@@ -34,25 +288,42 @@
     "none",
     "scaleDown"
   ],
-  "CupertinoTimerPickerMode": [
-    "hm",
-    "ms",
-    "hms"
+  "ImageRepeat": [
+    "repeat",
+    "repeatX",
+    "repeatY",
+    "noRepeat"
   ],
-  "CupertinoDatePickerMode": [
-    "time",
-    "date",
-    "dateAndTime",
-    "monthYear"
+  "FilterQuality": [
+    "none",
+    "low",
+    "medium",
+    "high"
   ],
-  "EdgeInsetsGeometry": [
-    "infinity"
+  "EdgeInsetsDirectional": [
+    "zero"
   ],
-  "AxisDirection": [
-    "up",
+  "Radius": [
+    "zero"
+  ],
+  "ScrollbarOrientation": [
+    "left",
     "right",
-    "down",
-    "left"
+    "top",
+    "bottom"
+  ],
+  "TextInputType": [
+    "datetime",
+    "emailAddress",
+    "multiline",
+    "name",
+    "none",
+    "number",
+    "phone",
+    "streetAddress",
+    "text",
+    "url",
+    "visiblePassword"
   ],
   "Icons": [
     "abc",
@@ -8881,475 +9152,26 @@
     "zoom_out_rounded",
     "zoom_out_sharp"
   ],
-  "Duration": [
-    "hoursPerDay",
-    "microsecondsPerDay",
-    "microsecondsPerHour",
-    "microsecondsPerMillisecond",
-    "microsecondsPerMinute",
-    "microsecondsPerSecond",
-    "millisecondsPerDay",
-    "millisecondsPerHour",
-    "millisecondsPerMinute",
-    "millisecondsPerSecond",
-    "minutesPerDay",
-    "minutesPerHour",
-    "secondsPerDay",
-    "secondsPerHour",
-    "secondsPerMinute",
-    "zero"
-  ],
-  "HitTestBehavior": [
-    "deferToChild",
-    "opaque",
-    "translucent"
-  ],
-  "Alignment": [
-    "bottomCenter",
-    "bottomLeft",
-    "bottomRight",
-    "center",
-    "centerLeft",
-    "centerRight",
-    "topCenter",
-    "topLeft",
-    "topRight"
-  ],
-  "Offset": [
-    "infinite",
-    "zero"
-  ],
-  "Clip": [
-    "none",
-    "hardEdge",
-    "antiAlias",
-    "antiAliasWithSaveLayer"
-  ],
-  "DecorationPosition": [
-    "background",
-    "foreground"
-  ],
-  "BottomNavigationBarType": [
-    "fixed",
-    "shifting"
-  ],
-  "TextDirection": [
-    "LTR",
-    "RTL",
-    "UNKNOWN"
-  ],
-  "BoxShape": [
-    "rectangle",
-    "circle"
-  ],
-  "MouseCursor": [
-    "defer",
-    "uncontrolled"
-  ],
-  "MaterialTapTargetSize": [
-    "padded",
-    "shrinkWrap"
-  ],
-  "OptionsViewOpenDirection": [
-    "up",
-    "down"
-  ],
-  "MainAxisSize": [
-    "min",
-    "max"
-  ],
-  "BlendMode": [
-    "clear",
-    "src",
-    "dst",
-    "srcOver",
-    "dstOver",
-    "srcIn",
-    "dstIn",
-    "srcOut",
-    "dstOut",
-    "srcATop",
-    "dstATop",
-    "xor",
-    "plus",
-    "modulate",
-    "screen",
-    "overlay",
-    "darken",
-    "lighten",
-    "colorDodge",
-    "colorBurn",
-    "hardLight",
-    "softLight",
-    "difference",
-    "exclusion",
-    "multiply",
-    "hue",
-    "saturation",
-    "color",
-    "luminosity"
-  ],
-  "TextDecoration": [
-    "lineThrough",
-    "none",
-    "overline",
-    "underline"
-  ],
-  "DateTime": [
-    "april",
-    "august",
-    "daysPerWeek",
-    "december",
-    "february",
-    "friday",
-    "january",
-    "july",
-    "june",
-    "march",
-    "may",
-    "monday",
-    "monthsPerYear",
-    "november",
-    "october",
-    "saturday",
-    "september",
-    "sunday",
-    "thursday",
-    "tuesday",
-    "wednesday"
-  ],
-  "FloatingActionButtonLocation": [
-    "centerDocked",
-    "centerFloat",
-    "centerTop",
-    "endContained",
-    "endDocked",
-    "endFloat",
-    "endTop",
-    "miniCenterDocked",
-    "miniCenterFloat",
-    "miniCenterTop",
-    "miniEndDocked",
-    "miniEndFloat",
-    "miniEndTop",
-    "miniStartDocked",
-    "miniStartFloat",
-    "miniStartTop",
-    "startDocked",
-    "startFloat",
-    "startTop"
-  ],
-  "StrokeCap": [
-    "butt",
-    "round",
-    "square"
-  ],
-  "FilterQuality": [
-    "none",
-    "low",
-    "medium",
-    "high"
-  ],
-  "CrossFadeState": [
-    "showFirst",
-    "showSecond"
-  ],
-  "WrapAlignment": [
-    "start",
-    "end",
-    "center",
-    "spaceBetween",
-    "spaceAround",
-    "spaceEvenly"
-  ],
-  "BorderRadius": [
-    "zero"
-  ],
-  "AutovalidateMode": [
-    "disabled",
-    "always",
-    "onUserInteraction"
-  ],
-  "FlutterLogoStyle": [
-    "markOnly",
-    "horizontal",
-    "stacked"
-  ],
-  "PanAxis": [
-    "horizontal",
-    "vertical",
-    "aligned",
-    "free"
-  ],
-  "AnimationBehavior": [
-    "normal",
-    "preserve"
-  ],
-  "NavigationRailLabelType": [
-    "none",
-    "selected",
-    "all"
-  ],
-  "StackFit": [
-    "loose",
-    "expand",
-    "passthrough"
-  ],
-  "TextScaler": [
-    "noScaling"
-  ],
-  "BorderSide": [
-    "none",
-    "strokeAlignCenter",
-    "strokeAlignInside",
-    "strokeAlignOutside"
-  ],
-  "TextEditingValue": [
-    "empty"
-  ],
-  "CrossAxisAlignment": [
-    "start",
-    "end",
-    "center",
-    "stretch",
-    "baseline"
-  ],
-  "TextDecorationStyle": [
-    "solid",
-    "double",
-    "dotted",
-    "dashed",
-    "wavy"
-  ],
-  "DatePickerDateOrder": [
-    "dmy",
-    "mdy",
-    "ymd",
-    "ydm"
-  ],
-  "FloatingActionButtonAnimator": [
-    "scaling"
-  ],
-  "SnackBarBehavior": [
-    "fixed",
-    "floating"
-  ],
-  "DragStartBehavior": [
-    "down",
-    "start"
-  ],
-  "Brightness": [
-    "dark",
-    "light"
-  ],
-  "NavigationDestinationLabelBehavior": [
-    "alwaysShow",
-    "alwaysHide",
-    "onlyShowSelected"
-  ],
-  "PopupMenuPosition": [
-    "over",
-    "under"
-  ],
-  "WrapCrossAlignment": [
-    "start",
-    "end",
-    "center"
-  ],
-  "ImageRepeat": [
-    "repeat",
-    "repeatX",
-    "repeatY",
-    "noRepeat"
-  ],
-  "TabBarIndicatorSize": [
-    "tab",
-    "label"
-  ],
-  "Radius": [
-    "zero"
-  ],
-  "BorderStyle": [
-    "none",
-    "solid"
-  ],
-  "EdgeInsets": [
-    "zero"
-  ],
-  "ListTileStyle": [
-    "list",
-    "drawer"
-  ],
-  "RefreshIndicatorTriggerMode": [
-    "anywhere",
-    "onEdge"
-  ],
-  "VerticalDirection": [
-    "up",
-    "down"
-  ],
-  "FontWeight": [
-    "bold",
-    "normal",
-    "w100",
-    "w200",
-    "w300",
-    "w400",
-    "w500",
-    "w600",
-    "w700",
-    "w800",
-    "w900"
-  ],
-  "AlignmentDirectional": [
-    "bottomCenter",
-    "bottomEnd",
-    "bottomStart",
-    "center",
-    "centerEnd",
-    "centerStart",
-    "topCenter",
-    "topEnd",
-    "topStart"
-  ],
-  "Rect": [
-    "largest",
-    "zero"
-  ],
-  "StepperType": [
-    "vertical",
-    "horizontal"
-  ],
-  "ScrollbarOrientation": [
-    "left",
-    "right",
-    "top",
-    "bottom"
-  ],
-  "ScrollViewKeyboardDismissBehavior": [
-    "manual",
-    "onDrag"
-  ],
-  "DismissDirection": [
-    "vertical",
-    "horizontal",
-    "endToStart",
-    "startToEnd",
-    "up",
-    "down",
-    "none"
-  ],
-  "SliderInteraction": [
-    "tapAndSlide",
-    "tapOnly",
-    "slideOnly",
-    "slideThumb"
-  ],
-  "NavigationMode": [
-    "traditional",
-    "directional"
-  ],
-  "EdgeInsetsDirectional": [
-    "zero"
-  ],
-  "TextBaseline": [
-    "alphabetic",
-    "ideographic"
-  ],
-  "TextAffinity": [
-    "upstream",
-    "downstream"
-  ],
-  "FontStyle": [
-    "normal",
-    "italic"
-  ],
-  "UndoHistoryValue": [
-    "empty"
-  ],
-  "TextRange": [
-    "empty"
-  ],
-  "TextLeadingDistribution": [
-    "proportional",
-    "even"
-  ],
-  "FloatingLabelBehavior": [
-    "never",
-    "auto",
-    "always"
-  ],
   "OverlayVisibilityMode": [
     "never",
     "editing",
     "notEditing",
     "always"
   ],
-  "SystemUiOverlayStyle": [
-    "dark",
-    "light"
+  "SmartQuotesType": [
+    "disabled",
+    "enabled"
   ],
-  "BottomNavigationBarLandscapeLayout": [
-    "spread",
-    "centered",
-    "linear"
+  "SmartDashesType": [
+    "disabled",
+    "enabled"
   ],
-  "TextAlign": [
-    "left",
-    "right",
-    "center",
-    "justify",
-    "start",
-    "end"
-  ],
-  "TabAlignment": [
-    "start",
-    "startOffset",
-    "fill",
-    "center"
-  ],
-  "TextInputType": [
-    "datetime",
-    "emailAddress",
-    "multiline",
-    "name",
-    "none",
-    "number",
-    "phone",
-    "streetAddress",
-    "text",
-    "url",
-    "visiblePassword"
-  ],
-  "FloatingLabelAlignment": [
-    "center",
+  "DragStartBehavior": [
+    "down",
     "start"
   ],
-  "OverflowBarAlignment": [
-    "start",
-    "end",
-    "center"
-  ],
-  "ListTileTitleAlignment": [
-    "threeLine",
-    "titleHeight",
-    "top",
-    "center",
-    "bottom"
-  ],
-  "TextOverflow": [
-    "clip",
-    "fade",
-    "ellipsis",
-    "visible"
-  ],
-  "TooltipTriggerMode": [
-    "manual",
-    "longPress",
-    "tap"
-  ],
-  "InputBorder": [
-    "none"
+  "UndoHistoryValue": [
+    "empty"
   ],
   "TextInputAction": [
     "none",
@@ -9366,31 +9188,11 @@
     "emergencyCall",
     "newline"
   ],
-  "SmartQuotesType": [
-    "disabled",
-    "enabled"
-  ],
-  "TextWidthBasis": [
-    "parent",
-    "longestLine"
-  ],
   "TextCapitalization": [
     "words",
     "sentences",
     "characters",
     "none"
-  ],
-  "SmartDashesType": [
-    "disabled",
-    "enabled"
-  ],
-  "TargetPlatform": [
-    "android",
-    "fuchsia",
-    "iOS",
-    "linux",
-    "macOS",
-    "windows"
   ],
   "TextAlignVertical": [
     "bottom",
@@ -9414,6 +9216,102 @@
     "tight",
     "max"
   ],
+  "TextMagnifierConfiguration": [
+    "disabled"
+  ],
+  "CupertinoTimerPickerMode": [
+    "hm",
+    "ms",
+    "hms"
+  ],
+  "ScrollViewKeyboardDismissBehavior": [
+    "manual",
+    "onDrag"
+  ],
+  "DecorationPosition": [
+    "background",
+    "foreground"
+  ],
+  "DismissDirection": [
+    "vertical",
+    "horizontal",
+    "endToStart",
+    "startToEnd",
+    "up",
+    "down",
+    "none"
+  ],
+  "HitTestBehavior": [
+    "deferToChild",
+    "opaque",
+    "translucent"
+  ],
+  "FlutterLogoStyle": [
+    "markOnly",
+    "horizontal",
+    "stacked"
+  ],
+  "AutovalidateMode": [
+    "disabled",
+    "always",
+    "onUserInteraction"
+  ],
+  "Uint8List": [
+    "bytesPerElement"
+  ],
+  "StackFit": [
+    "loose",
+    "expand",
+    "passthrough"
+  ],
+  "PanAxis": [
+    "horizontal",
+    "vertical",
+    "aligned",
+    "free"
+  ],
+  "Alignment": [
+    "bottomCenter",
+    "bottomLeft",
+    "bottomRight",
+    "center",
+    "centerLeft",
+    "centerRight",
+    "topCenter",
+    "topLeft",
+    "topRight"
+  ],
+  "ListTileStyle": [
+    "list",
+    "drawer"
+  ],
+  "ListTileTitleAlignment": [
+    "threeLine",
+    "titleHeight",
+    "top",
+    "center",
+    "bottom"
+  ],
+  "FloatingLabelBehavior": [
+    "never",
+    "auto",
+    "always"
+  ],
+  "FloatingLabelAlignment": [
+    "center",
+    "start"
+  ],
+  "InputBorder": [
+    "none"
+  ],
+  "TargetPlatform": [
+    "android",
+    "fuchsia",
+    "iOS",
+    "linux",
+    "macOS",
+    "windows"
+  ],
   "Typography": [
     "blackCupertino",
     "blackHelsinki",
@@ -9435,9 +9333,6 @@
     "whiteRedmond",
     "whiteRedwoodCity"
   ],
-  "TextMagnifierConfiguration": [
-    "disabled"
-  ],
   "ButtonTextTheme": [
     "normal",
     "accent",
@@ -9447,10 +9342,136 @@
     "constrained",
     "padded"
   ],
+  "NavigationDestinationLabelBehavior": [
+    "alwaysShow",
+    "alwaysHide",
+    "onlyShowSelected"
+  ],
+  "NavigationRailLabelType": [
+    "none",
+    "selected",
+    "all"
+  ],
+  "PopupMenuPosition": [
+    "over",
+    "under"
+  ],
   "ShowValueIndicator": [
     "onlyForDiscrete",
     "onlyForContinuous",
     "always",
     "never"
+  ],
+  "SliderInteraction": [
+    "tapAndSlide",
+    "tapOnly",
+    "slideOnly",
+    "slideThumb"
+  ],
+  "SnackBarBehavior": [
+    "fixed",
+    "floating"
+  ],
+  "TabBarIndicatorSize": [
+    "tab",
+    "label"
+  ],
+  "TabAlignment": [
+    "start",
+    "startOffset",
+    "fill",
+    "center"
+  ],
+  "TooltipTriggerMode": [
+    "manual",
+    "longPress",
+    "tap"
+  ],
+  "ThemeMode": [
+    "system",
+    "light",
+    "dark"
+  ],
+  "TextScaler": [
+    "noScaling"
+  ],
+  "NavigationMode": [
+    "traditional",
+    "directional"
+  ],
+  "TraversalEdgeBehavior": [
+    "closedLoop",
+    "leaveFlutterView",
+    "parentScope"
+  ],
+  "RefreshIndicatorTriggerMode": [
+    "anywhere",
+    "onEdge"
+  ],
+  "FloatingActionButtonLocation": [
+    "centerDocked",
+    "centerFloat",
+    "centerTop",
+    "endContained",
+    "endDocked",
+    "endFloat",
+    "endTop",
+    "miniCenterDocked",
+    "miniCenterFloat",
+    "miniCenterTop",
+    "miniEndDocked",
+    "miniEndFloat",
+    "miniEndTop",
+    "miniStartDocked",
+    "miniStartFloat",
+    "miniStartTop",
+    "startDocked",
+    "startFloat",
+    "startTop"
+  ],
+  "FloatingActionButtonAnimator": [
+    "scaling"
+  ],
+  "AlignmentDirectional": [
+    "bottomCenter",
+    "bottomEnd",
+    "bottomStart",
+    "center",
+    "centerEnd",
+    "centerStart",
+    "topCenter",
+    "topEnd",
+    "topStart"
+  ],
+  "AxisDirection": [
+    "up",
+    "right",
+    "down",
+    "left"
+  ],
+  "StepperType": [
+    "vertical",
+    "horizontal"
+  ],
+  "TableCellVerticalAlignment": [
+    "top",
+    "middle",
+    "bottom",
+    "baseline",
+    "fill",
+    "intrinsicHeight"
+  ],
+  "WrapAlignment": [
+    "start",
+    "end",
+    "center",
+    "spaceBetween",
+    "spaceAround",
+    "spaceEvenly"
+  ],
+  "WrapCrossAlignment": [
+    "start",
+    "end",
+    "center"
   ]
 }

@@ -13,6 +13,7 @@ type Property = {
     params: Property[] | null;
   };
   value: null | string | Widget;
+  default: null | string | Widget;
   required: boolean;
   positional: boolean;
   enum: boolean;

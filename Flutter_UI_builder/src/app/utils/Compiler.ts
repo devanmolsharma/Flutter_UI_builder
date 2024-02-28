@@ -11,11 +11,14 @@ class Compiler {
   ];
 
   static format(data: string, type: string) {
-    if (type == "String") return `'${data}'`;
+    if (type == "String" && !data.includes("'")) return `'${data}'`;
     else return `${data}`;
   }
 
   static convertPropertyJsonToCode(prop: Property): string {
+    if(prop.value == prop.default){
+      return "null";
+    }
     const name = prop.name;
     const value = prop.value;
 
@@ -28,10 +31,7 @@ class Compiler {
         return `${Compiler.format(value as string, prop.type.class)}`;
       }
 
-      return `${name} : ${Compiler.format(
-        value as string,
-        prop.type.class
-      )}`;
+      return `${name} : ${Compiler.format(value as string, prop.type.class)}`;
     }
 
     let subProps = prop.type.params

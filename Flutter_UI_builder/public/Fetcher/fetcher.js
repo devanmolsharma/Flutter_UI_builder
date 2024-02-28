@@ -205,9 +205,9 @@ let parser = new DOMParser();
 const skipClasses = ['Key', 'BuildContext', 'DiagnosticLevel', 'DiagnosticsTreeStyle'];
 
 // Function to parse a parameter
-async function parseParam(param, recursion,allStr) {
+async function parseParam(param, recursion, allStr) {
     let positionals = allStr.split('{')[0];
-    
+
     if (param.includes("Deprecated") || param.includes("→") || param.length < 4) {
         return null;
     }
@@ -245,8 +245,14 @@ async function parseParam(param, recursion,allStr) {
     parsedType.params = subParams;
 
     let defaultVal = param.includes("=") ? splittedParam[3] : null;
-    if (parsedType.isFunction && required && (defaultVal == null)) {
-        defaultVal = "()=>{}"
+    if (defaultVal) {
+        let splitted = defaultVal.split('.');
+        if (splitted.length > 1) {
+            defaultVal = splitted[splitted.length - 2] + '.' + splitted[splitted.length - 1]
+        }
+        if (parsedType.isFunction && required && (defaultVal == null)) {
+            defaultVal = "()=>{}"
+        }
     }
 
     // Return parsed parameter information
@@ -255,14 +261,15 @@ async function parseParam(param, recursion,allStr) {
             name: splittedParam[1],
             type: parsedType,
             value: defaultVal,
-            positional:positionals.includes(splittedParam[1]),
+            default: defaultVal,
+            positional: positionals.includes(splittedParam[1]),
             required: required,
             enum: isEnum,
         }
 }
 
 // Function to parse a class
-async function parseClass(name, recursion = 3) {
+async function parseClass(name, recursion = 3, return_variations = false) {
     // Check if the class has already been parsed
     if (Object.keys(parsedClassesMap).includes(name)) {
         return parsedClassesMap[name];
@@ -277,24 +284,59 @@ async function parseClass(name, recursion = 3) {
             // Parse HTML document and extract parameter information
             doc = parser.parseFromString(await res.text(), 'text/html');
             let j = [];
-            let allStr = doc.querySelector(`#${name}`).innerText;
-            doc.querySelectorAll(`#${name} .parameter`).forEach((E, i) => {
-                j[i] = E.innerText.split(',')[0]
-            })
+            let elements = [];
+            doc.querySelectorAll('#constructors dt').forEach((E) => elements.push(E));
+            if (!return_variations) {
+                let allStr = doc.querySelector(`#${name}`).innerText;
+                doc.querySelectorAll(`#${name} .parameter`).forEach((E, i) => {
+                    j[i] = E.innerText.split(',')[0]
+                })
 
-            let filtered = [];
-            for (let i = 0; i < j.length; i++) {
-                let param = await parseParam(j[i], recursion,allStr);
-                if (param != null) {
-                    filtered.push(param);
+                let filtered = [];
+                for (let i = 0; i < j.length; i++) {
+                    try {
+                        let param = await parseParam(j[i], recursion, allStr);
+                        if (param != null) {
+                            filtered.push(param);
+                        }
+                    } catch (e) { return }
                 }
+                // Cache parsed information for future use
+                parsedClassesMap[name] = filtered;
+                return filtered;
             }
-            // Cache parsed information for future use
-            parsedClassesMap[name] = filtered;
-            return filtered;
+            else {
+                let classes = []
+
+                for (const el of elements) {
+                    const id = el.id;
+                    try {
+                        let allStr = el.innerText;
+                        el.querySelectorAll(`.parameter`).forEach((E, i) => {
+                            j[i] = E.innerText.split(',')[0]
+                        })
+
+                        let filtered = [];
+                        for (let i = 0; i < j.length; i++) {
+                            let param;
+                            try {
+                             param = await parseParam(j[i], recursion, allStr);
+                            } catch (e) { }
+                            if (param != null) {
+                                filtered.push(param);
+                            }
+                        }
+                        // Cache parsed information for future use
+                        classes.push({ name: id, data: filtered });
+                    } catch (e) { console.log(e, id); }
+                }
+                // parsedClassesMap[name] = classes;
+                console.log(classes);
+                return classes;
+            }
         }
     } catch (error) {
-        // Handle errors during parsing
+        // console.log(error);
     }
 
     // Cache null value for the class if parsing fails
@@ -341,20 +383,18 @@ async function parseEnum(className) {
 
 // Function to get attributes for a list of names
 async function getAttributes() {
-    let count = 0;
     const total = Names.length;
-    Names.forEach(
-        async (name, i) => {
-            try {
-                params = await parseClass(name);
-                // Parse class and store the result in elementParameterMap
-                params && elementParameterMap.push({ name: name, params: params });
-            } catch (error) {
-                // Handle errors during parsing
+    for (let i = 0; i < total; i++) {
+        const name = Names[i];
+        try {
+            const classesList = await parseClass(name, 3, true);
+            // Parse class and store the result in elementParameterMap
+            if (classesList) {
+                classesList.forEach((classadata) => elementParameterMap.push({ name: classadata.name, params: classadata.data }))
             }
-            count++;
-
-            console.log(count + '/' + total + "done");
+        } catch (error) {
+            console.log(error);
         }
-    )
+        console.log((i + 1) + '/' + total + " done");
+    }
 }

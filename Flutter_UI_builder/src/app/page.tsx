@@ -1,16 +1,11 @@
 "use client";
-
 import styles from "./page.module.css";
-
 import { useEffect, useState } from "react";
-import { Container, Navbar } from "react-bootstrap";
-
 import { WidgetsList } from "./components/WidgetList/";
 import { ParametersList } from "./components/ParamtersList";
-
 import Block from "./Block";
-
 import config from "./config";
+import NavigationBar from "./components/NavigationBar/NavigationBar";
 
 export default function Home() {
   const [widgets, setWidgets] = useState([] as Widget[]);
@@ -26,11 +21,7 @@ export default function Home() {
 
   return (
     <div className={styles.base}>
-      <Navbar expand="lg" className="bg-body-dark">
-        <Container>
-          <Navbar.Brand href="#">UI Builder</Navbar.Brand>
-        </Container>
-      </Navbar>
+      <NavigationBar/>
       <div className={styles.body}>
         <div className={styles.section}>
           <WidgetsList
