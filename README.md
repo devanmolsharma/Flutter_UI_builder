@@ -2,6 +2,7 @@
  A no-code Builder for android ,web, linux, windows ,mac and ios applications. 🚧(under development)🚧
 
 ## Demo
+![screenshot](https://github.com/devanmolsharma/Flutter_UI_builder/raw/main/demos/screenshot.png)
 ![demo](https://github.com/devanmolsharma/Flutter_UI_builder/raw/main/demos/beta1.webm)
 
 ### Requirements:
