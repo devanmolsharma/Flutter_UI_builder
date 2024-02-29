@@ -1,6 +1,9 @@
 # Flutter_UI_builder
  A no-code Builder for android ,web, linux, windows ,mac and ios applications. 🚧(under development)🚧
 
+## Demo
+![demo](https://github.com/devanmolsharma/Flutter_UI_builder/raw/main/demos/beta1.webm)
+
 ### Requirements:
 1. **npm**: npm is a tool used for managing packages and dependencies for JavaScript projects. You can install it by downloading and installing Node.js, which includes npm by default.
    
