@@ -1,10 +1,10 @@
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
-
 void main() {
   runApp(const MyApp());
 }
@@ -29,30 +29,6 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: Column(
-        children: [
-          AppBar(
-            title: Text(
-              'Counter',
-            ),
-          ),
-          Center(
-            child: Text(
-              'Counter',
-            ),
-          ),
-        ],
-      ),
-      floatingActionButton: IconButton(
-        icon: Icon(Icons.add),
-        onPressed: () => {/**/},
-      ),
-      drawer: NavigationDrawer(
-        children: [Column()],
-        elevation: 3,
-      ),
-    );
+  Widget build(BuildContext context) { return Scaffold();
   }
 }
