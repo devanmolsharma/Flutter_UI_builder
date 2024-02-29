@@ -1,5 +1,5 @@
 "use client";
-import { ReactElement, useEffect, useState } from "react";
+import { ReactElement, useEffect, useMemo, useState } from "react";
 import "./widgetList.css";
 import Block from "@/app/Block";
 import AddWidgetDialog from "../AddWidgetDialog/AddWidgetDialog";
@@ -20,8 +20,7 @@ export function WidgetsList({
     return <></>;
   }
 
-  const Scaffold = widgets.find((v) => v.name == "Scaffold");
-  let [baseBlock, setBaseBlock] = useState(new Block(Scaffold!, "Scaffold"));
+  let [baseBlock, setBaseBlock] = useState(new Block(widgets.find((v) => v.name == "Scaffold")!,'Scaffold'));
   let [selectedBlock, setSelectedBlock] = useState<Block>();
   let [propname, setPropName] = useState("");
   let [showDialog, setShowDialog] = useState(true);
@@ -116,10 +115,10 @@ export function WidgetsList({
 
           setTimeout(() => {
             fetch(config.host + ":8080/render").then((_) => {
-                var iframe = document.getElementById(
-                  "flutterview"
-                ) as HTMLIFrameElement;
-                iframe.src = iframe.src;
+              var iframe = document.getElementById(
+                "flutterview"
+              ) as HTMLIFrameElement;
+              iframe.src = iframe.src;
             });
           }, 2000);
         }}

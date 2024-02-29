@@ -1,19 +1,14 @@
-import { useEffect, useState } from "react";
-import "bootstrap/dist/css/bootstrap.min.css"; // Import Bootstrap CSS
-import { Form, Col, Accordion } from "react-bootstrap"; // Import Bootstrap components as needed
 import "./ParametersList.css";
-
+import json from '../../../../public/Fetcher/enums.json'
+import { TreeView } from "@mui/x-tree-view/TreeView";
+import { TreeItem } from "@mui/x-tree-view/TreeItem";
+import { RiSettings4Line, RiSettings2Fill } from "react-icons/ri";
 /**
- * TODOS:
- * add switch for boolean parameters
- * add a color selector ( https://www.npmjs.com/package/react-colorful )
- * map parameter change to change values in actual Block
+ * TODO:
+ * set property to true on checkbox checked
  */
-
-let enums: EnumList;
-
 export function ParametersList({ selectedBlock }: ParamtersListProps) {
-  const [accordionKey, setAccordionKey] = useState<string | null>(null);
+  const enums: EnumList = json;
 
   function changeProp(id: string, value: null | string) {
     const indices = id.split("_");
@@ -28,6 +23,8 @@ export function ParametersList({ selectedBlock }: ParamtersListProps) {
     wid.params = newParams;
 
     selectedBlock.widget = wid;
+    console.log(wid);
+
   }
 
   function setValue(property: Property, ids: string[], value: string | null) {
@@ -58,26 +55,15 @@ export function ParametersList({ selectedBlock }: ParamtersListProps) {
       const elClass = property.type.class;
       if (
         elClass !== "Widget" &&
-        elClass !== "List<Widget>" &&
-        elClass !== "bool"
+        elClass !== "List<Widget>"
       ) {
         jsxCode.push(
-          <Accordion key={propertyKey} defaultActiveKey={accordionKey}>
-            <Accordion.Item eventKey={propertyKey}>
-              <Accordion.Header
-                className="accordian_header"
-                onClick={() => setAccordionKey(propertyKey)}
-              >
-                <b>{property.name}</b>
-              </Accordion.Header>
-              <Accordion.Body>
-                {renderPropertyInput(property, propertyKey)}
-                {property.type.params && property.type.params.length > 0 && (
-                  <ul>{ParseProps(property.type.params, propertyKey)}</ul>
-                )}
-              </Accordion.Body>
-            </Accordion.Item>
-          </Accordion>
+          <TreeItem key={propertyKey} label={property.name} nodeId={propertyKey || ''}>
+            {renderPropertyInput(property, propertyKey)}
+            {property.type.params && property.type.params.length > 0 && (
+              ParseProps(property.type.params, propertyKey)
+            )}
+          </TreeItem>
         );
       }
     });
@@ -92,70 +78,76 @@ export function ParametersList({ selectedBlock }: ParamtersListProps) {
 
     if (property.enum) {
       jxList.push(
-        <Form.Select
-          defaultValue={
-            (property.value && (property.value as string).split(".")[1]) ?? ""
-          }
+        <select
           onChange={(e) =>
             changeProp(key, property.type.class + "." + e.target.value)
           }
         >
           <option key="None">None/Custom</option>
           {enums[property.type.class].map((enumVal) => (
-            <option key={enumVal}>{enumVal}</option>
+            <option key={enumVal} value={enumVal} selected={property.type.class + "." + enumVal == property.value}>{enumVal}</option>
           ))}
-        </Form.Select>
+        </select>
       );
+      // return jxList;
     }
 
     if (
       ["int", "double", "String"].indexOf(property.type.class) != -1
     ) {
       jxList.push(
-        <Form.Control
+        <input
           onChange={(e) => changeProp(key, e.target.value)}
           id={property.name}
           type="text"
+          defaultValue={`${property.value || ''}`}
         />
       );
+      return jxList;
+    }
+
+    if (property.name.endsWith('Color')) {
+
+      jxList.push(
+        <input
+          onChange={(e) => changeProp(key + '_value', e.target.value.replace('#', '0xff'))}
+          id={property.name}
+          type="color"
+        />
+      )
+      return jxList;
+
     }
 
     if (
       property.type.isFunction
     ) {
       jxList.push(
-        <Form.Control defaultValue={(property.value as string)??''}
+        <input defaultValue={(property.value as string) || ''}
           onChange={(e) => changeProp(key, e.target.value)}
           id={property.name}
           type="text"
         />
       );
+      return jxList;
     }
 
     if (elClass === "bool") {
-      jxList.push(<Form.Check type="checkbox" label={`${property.name}`} />);
+      console.log('Boolean');
+
+      jxList.push(<input type="checkbox" />, ` ${property.name}`);
+      return jxList;
     }
 
     return jxList;
-  }
 
-  useEffect(() => {
-    fetch("./Fetcher/enums.json").then((data) =>
-      data.json().then((json) => {
-        enums = json as EnumList;
-      })
-    );
-  }, []);
+  }
 
   return (
     selectedBlock != null && (
       <div className="ParametersList">
-        <h1>{selectedBlock.widget.name}</h1>
-        <Col className="paramsCollapsable">
-          <Form>
-            <ul>{ParseProps(selectedBlock.widget.params)}</ul>
-          </Form>
-        </Col>
+        {/* <h1>{selectedBlock.widget.name}</h1> */}
+        <TreeView className="propsView" defaultCollapseIcon={<RiSettings2Fill />} defaultExpandIcon={<RiSettings4Line />}>{ParseProps(selectedBlock.widget.params)}</TreeView>
       </div>
     )
   );

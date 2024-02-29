@@ -16,7 +16,7 @@ class Compiler {
   }
 
   static convertPropertyJsonToCode(prop: Property): string {
-    if(prop.value == prop.default){
+    if (prop.value == prop.default && (prop.enum || this.basicTypes.includes(prop.type.class))) {
       return "null";
     }
     const name = prop.name;

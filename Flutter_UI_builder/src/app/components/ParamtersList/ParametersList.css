@@ -2,11 +2,6 @@
     cursor: pointer;
 }
 
-.paramsCollapsable{
-    position: relative;
-    left: -30px;
-}
-
 .ParametersList{
-    margin: 20px;
+    margin: 10px;
 }
