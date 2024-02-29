@@ -79,8 +79,8 @@ class Compiler {
     });
 
     functionParams?.forEach((param) => {
-      if (param.required) {
-        base += `${param.name}:${param.value},`;
+      if (param.required || param.value) {
+        base += `${param.name}:()=>{/*${param.value || ''}*/},`;
       }
     });
 

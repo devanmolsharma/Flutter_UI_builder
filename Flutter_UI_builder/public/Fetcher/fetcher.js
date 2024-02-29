@@ -250,9 +250,9 @@ async function parseParam(param, recursion, allStr) {
         if (splitted.length > 1) {
             defaultVal = splitted[splitted.length - 2] + '.' + splitted[splitted.length - 1]
         }
-        if (parsedType.isFunction && required && (defaultVal == null)) {
-            defaultVal = "()=>{}"
-        }
+        // if (parsedType.isFunction && required && (defaultVal == null)) {
+        //     defaultVal = "()=>{}"
+        // }
     }
 
     // Return parsed parameter information
@@ -271,7 +271,7 @@ async function parseParam(param, recursion, allStr) {
 // Function to parse a class
 async function parseClass(name, recursion = 3, return_variations = false) {
     // Check if the class has already been parsed
-    if (Object.keys(parsedClassesMap).includes(name)) {
+    if (!return_variations && Object.keys(parsedClassesMap).includes(name)) {
         return parsedClassesMap[name];
     }
 
@@ -320,7 +320,7 @@ async function parseClass(name, recursion = 3, return_variations = false) {
                         for (let i = 0; i < j.length; i++) {
                             let param;
                             try {
-                             param = await parseParam(j[i], recursion, allStr);
+                                param = await parseParam(j[i], recursion, allStr);
                             } catch (e) { }
                             if (param != null) {
                                 filtered.push(param);
@@ -395,6 +395,6 @@ async function getAttributes() {
         } catch (error) {
             console.log(error);
         }
-        console.log((i + 1) + '/' + total + " done");
+        console.log((i + 1) + '/' + total + " done", );
     }
 }

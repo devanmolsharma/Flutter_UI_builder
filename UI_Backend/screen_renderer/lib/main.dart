@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'dart:ui';
 
 import 'package:flutter/material.dart';
 
@@ -32,54 +33,26 @@ class _MyHomePageState extends State<MyHomePage> {
     return Scaffold(
       body: Column(
         children: [
-          TextButton(
-            child: Text(
-              'Hola!',
+          AppBar(
+            title: Text(
+              'Counter',
             ),
-            focusNode: FocusNode(
-                skipTraversal: false,
-                canRequestFocus: true,
-                descendantsAreFocusable: true,
-                descendantsAreTraversable: true),
-            autofocus: false,
-            clipBehavior: Clip.none,
-            isSemanticButton: true,
-            onPressed: () => {},
           ),
-          Divider(),
-          IconButton(
-            icon: Icon(
-              Icons.access_alarms,
+          Center(
+            child: Text(
+              'Counter',
             ),
-            focusNode: FocusNode(
-                skipTraversal: false,
-                canRequestFocus: true,
-                descendantsAreFocusable: true,
-                descendantsAreTraversable: true),
-            autofocus: false,
-            constraints: BoxConstraints(
-                minWidth: 0.0,
-                maxWidth: double.infinity,
-                minHeight: 0.0,
-                maxHeight: double.infinity),
-            onPressed: () => {},
           ),
         ],
-        mainAxisAlignment: MainAxisAlignment.start,
-        mainAxisSize: MainAxisSize.max,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        verticalDirection: VerticalDirection.down,
       ),
-      floatingActionButton: Icon(
-        Icons.access_alarms,
+      floatingActionButton: IconButton(
+        icon: Icon(Icons.add),
+        onPressed: () => {/**/},
       ),
-      persistentFooterAlignment: AlignmentDirectional.centerEnd,
-      primary: true,
-      drawerDragStartBehavior: DragStartBehavior.start,
-      extendBody: false,
-      extendBodyBehindAppBar: false,
-      drawerEnableOpenDragGesture: true,
-      endDrawerEnableOpenDragGesture: true,
+      drawer: NavigationDrawer(
+        children: [Column()],
+        elevation: 3,
+      ),
     );
   }
 }

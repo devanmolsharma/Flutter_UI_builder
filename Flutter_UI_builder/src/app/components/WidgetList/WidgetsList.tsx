@@ -116,12 +116,10 @@ export function WidgetsList({
 
           setTimeout(() => {
             fetch(config.host + ":8080/render").then((_) => {
-              setTimeout(() => {
                 var iframe = document.getElementById(
                   "flutterview"
                 ) as HTMLIFrameElement;
                 iframe.src = iframe.src;
-              }, 2000);
             });
           }, 2000);
         }}

@@ -38,11 +38,27 @@ app.get('/render', (req, res) => {
 
 app.get('/build/:type', (req, res) => {
     let type = req.params.type || 'web';
-    exec(`cd screen_renderer && rm -rf build && flutter build ${type} && zip -r build build`, (_, out, err) => {
-        res.status(err ? 500 : 200)
-        console.log(out,err);
-        res.download('screen_renderer/build.zip')
-    })
+    let buildFolder;
+    if (type === 'aab' || type === 'apk') {
+        buildFolder = 'build/app';
+    } else if (type === 'web') {
+        buildFolder = 'build/web';
+    } else if (type === 'linux') {
+        buildFolder = 'build/linux';
+    } else {
+        // Handle invalid build type
+        res.status(400).send('Invalid build type specified');
+        return;
+    }
+
+    exec(`cd screen_renderer && rm -rf build && flutter build ${type} && zip -r ${buildFolder} ${buildFolder}`, (_, out, err) => {
+        if (err) {
+            res.status(500).send('Error occurred during build');
+            return;
+        }
+
+        res.status(200).download(`screen_renderer/${buildFolder}.zip`);
+    });
 });
 
 app.post('/update', (req, res) => {

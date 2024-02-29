@@ -109,10 +109,22 @@ export function ParametersList({ selectedBlock }: ParamtersListProps) {
     }
 
     if (
-      ["bool", "int", "double", "String"].indexOf(property.type.class) != -1
+      ["int", "double", "String"].indexOf(property.type.class) != -1
     ) {
       jxList.push(
         <Form.Control
+          onChange={(e) => changeProp(key, e.target.value)}
+          id={property.name}
+          type="text"
+        />
+      );
+    }
+
+    if (
+      property.type.isFunction
+    ) {
+      jxList.push(
+        <Form.Control defaultValue={(property.value as string)??''}
           onChange={(e) => changeProp(key, e.target.value)}
           id={property.name}
           type="text"
