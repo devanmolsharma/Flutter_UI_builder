@@ -3,10 +3,9 @@ import json from '../../../../public/Fetcher/enums.json'
 import { TreeView } from "@mui/x-tree-view/TreeView";
 import { TreeItem } from "@mui/x-tree-view/TreeItem";
 import { RiSettings4Line, RiSettings2Fill } from "react-icons/ri";
-/**
- * TODO:
- * set property to true on checkbox checked
- */
+
+
+
 export function ParametersList({ selectedBlock }: ParamtersListProps) {
   const enums: EnumList = json;
 
@@ -135,7 +134,7 @@ export function ParametersList({ selectedBlock }: ParamtersListProps) {
     if (elClass === "bool") {
       console.log('Boolean');
 
-      jxList.push(<input type="checkbox" />, ` ${property.name}`);
+      jxList.push(<input type="checkbox" onChange={(e) => changeProp(key, e.target.checked ? 'true' : 'false')} />, ` ${property.name}`);
       return jxList;
     }
 
