@@ -39,3 +39,16 @@
    - Run the command `npm run dev` in the terminal. This command is defined in the package.json file and will start a development server for the Flutter UI builder application.
    - After running the command, wait for the server to start. Once it's running, you should see a message indicating that the server is listening on a specific port (likely port 3000).
    - Open your web browser and type `localhost:3000` in the address bar to access the Flutter UI builder application.
+
+## TODOS
+
+
+- move compiling logic to backend
+- work on UI a bit
+- make the whole layout resizable
+- Improve the parametes list widget to be easier to ineract
+- add copy button near each widget to copy dart code for that widget
+- add button to get dart code for whole application
+- Add a LLM to convert comments in funtions to actual code
+- handle the case where a widget accepts only a small subset of widgets, like BottomNavigationBar accepts only BottomNavigationBarItem , which is technically a widget
+- Handle when a property is a Widget
