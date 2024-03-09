@@ -29,6 +29,6 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   @override
-  Widget build(BuildContext context) { return Scaffold(body:Column(children: [AppBar(),Image.network('https://fastly.picsum.photos/id/242/300/500.jpg?hmac=6TsmLVvofGTpPcG7Yv-3LFyB2O55LyPal8cXumQyPfA',),],),floatingActionButton:FloatingActionButton(child:Icon(Icons.add_task,),onPressed:()=>{/**/},),drawer:Drawer(),backgroundColor : Color(0xff8ff0a4),);
+  Widget build(BuildContext context) { return Scaffold(body:TextButton(child:Text('JP Singh',style : TextStyle(color : Color(0xffe91ad2)),),onPressed:()=>{/**/},),);
   }
 }

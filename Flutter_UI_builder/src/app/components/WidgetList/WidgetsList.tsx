@@ -100,6 +100,7 @@ export function WidgetsList({
           onSubmit={(widget) => handleWidgetAddition(widget)}
           show={showDialog}
           setShow={setShowDialog}
+          widgets={widgets}
         />
       )}
       <button
@@ -125,11 +126,6 @@ export function WidgetsList({
       >
         Compile!
       </button>
-      <datalist id="widgets">
-        {widgets.map((widget: any) => (
-          <option>{widget.name}</option>
-        ))}
-      </datalist>
       <TreeView
         expanded={expandedNodes}
         defaultCollapseIcon={<MdOutlineExpandMore />}

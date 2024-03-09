@@ -1,0 +1,10 @@
+.widgetButton{
+    background-color: rgba(1, 0, 0, 0.62);
+    margin: 4px;
+    min-width: 100%;
+}
+
+.widBtnList{
+    max-height: 300px;
+    overflow: scroll;
+}

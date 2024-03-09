@@ -106,7 +106,7 @@ export function ParametersList({ selectedBlock }: ParamtersListProps) {
       return jxList;
     }
 
-    if (property.name.endsWith('Color')) {
+    if (property.name.toLowerCase().endsWith('color')) {
 
       jxList.push(
         <input
