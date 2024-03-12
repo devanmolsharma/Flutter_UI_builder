@@ -10,6 +10,7 @@ import { TreeItem } from "@mui/x-tree-view/TreeItem";
 import { MdOutlineExpandMore } from "react-icons/md";
 import { MdOutlineKeyboardArrowRight } from "react-icons/md";
 import { IoMdAddCircleOutline } from "react-icons/io";
+import { CgClipboard } from "react-icons/cg";
 
 export function WidgetsList({
   widgets,
@@ -20,7 +21,7 @@ export function WidgetsList({
     return <></>;
   }
 
-  let [baseBlock, setBaseBlock] = useState(new Block(widgets.find((v) => v.name == "Scaffold")!,'Scaffold'));
+  let [baseBlock, setBaseBlock] = useState(new Block(widgets.find((v) => v.name == "Scaffold")!, 'Scaffold'));
   let [selectedBlock, setSelectedBlock] = useState<Block>();
   let [propname, setPropName] = useState("");
   let [showDialog, setShowDialog] = useState(true);
@@ -29,6 +30,12 @@ export function WidgetsList({
   function toggleExpanded(ids: string[]) {
     setExpandedNodes(ids);
   }
+
+  function copyWidgetCode(block: Block) {
+    let code = Compiler.compileBlock(block);
+    navigator.clipboard.writeText(code)
+  }
+
   function parseBlock(block: Block, parent: string = "") {
     let children = block.children;
     let widgetListParams = block.widgetListParams();
@@ -40,6 +47,10 @@ export function WidgetsList({
           onBlockSelected(block);
         }}
         nodeId={`${block.name}_${parent}`}
+        icon={<CgClipboard onClick={
+          () => {copyWidgetCode(block);
+          alert('Copied Dart Code to Clipboard')}
+        } />}
       >
         {widgetListParams?.map((param) => (
           <TreeItem

@@ -47,7 +47,7 @@
 - work on UI a bit
 - make the whole layout resizable
 - Improve the parametes list widget to be easier to ineract
-- add copy button near each widget to copy dart code for that widget
+- prettify copy button near each widget to copy dart code for that widget
 - add button to get dart code for whole application
 - Add a LLM to convert comments in funtions to actual code
 - handle the case where a widget accepts only a small subset of widgets, like BottomNavigationBar accepts only BottomNavigationBarItem , which is technically a widget
