@@ -1,5 +1,5 @@
 "use client";
-import { ReactElement, useEffect, useMemo, useState } from "react";
+import { useState } from "react";
 import "./widgetList.css";
 import Block from "@/app/Block";
 import AddWidgetDialog from "../AddWidgetDialog/AddWidgetDialog";

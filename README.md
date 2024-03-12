@@ -44,6 +44,7 @@
 
 
 - move compiling logic to backend
+- show icon next to icon name in properties view
 - make the build async.
 - work on UI a bit
 - make the widgets on WidgetList dragable
