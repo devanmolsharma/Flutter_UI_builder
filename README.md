@@ -44,11 +44,13 @@
 
 
 - move compiling logic to backend
+- make the build async.
 - work on UI a bit
+- make the widgets on WidgetList dragable
 - make the whole layout resizable
-- Improve the parametes list widget to be easier to ineract
+- Improve the parameters list widget to be easier to ineract
 - prettify copy button near each widget to copy dart code for that widget
 - add button to get dart code for whole application
-- Add a LLM to convert comments in funtions to actual code
+- Add a LLM to convert comments in functions to actual code
 - handle the case where a widget accepts only a small subset of widgets, like BottomNavigationBar accepts only BottomNavigationBarItem , which is technically a widget
 - Handle when a property is a Widget
