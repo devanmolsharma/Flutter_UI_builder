@@ -4,20 +4,20 @@
   justify-content: space-around;
 }
 
-.body .building_base {
+.building_base {
   flex: 3;
   /* min-width: 500px; */
   min-height: 90vh;
 }
 
 .building_base iframe {
-  min-width: 90%;
+  min-width: 100%;
   min-height: 100%;
 }
 
-.body .section {
+.section {
   flex: 1;
-  min-height: 90vh;
+  min-height: 100%;
   /* min-width: 500px; */
   /* background-color: rebeccapurple; */
 }

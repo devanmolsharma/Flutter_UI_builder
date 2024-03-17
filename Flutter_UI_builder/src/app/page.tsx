@@ -20,10 +20,10 @@ export default function Home() {
   }, []);
 
   return (
-    <div className={styles.base}>
-      <NavigationBar/>
-      <div className={styles.body}>
-        <div className={styles.section}>
+    <div className="h-[95vh] bg-gray-800 flex-column">
+      <NavigationBar />
+      <div className='flex w-full h-full'>
+        <div className='flex-1'>
           <WidgetsList
             widgets={widgets}
             setWidgets={setWidgets}
@@ -32,12 +32,12 @@ export default function Home() {
             }}
           />
         </div>
-        <div className={styles.building_base}>
-          <iframe id="flutterview" src={`${config.host}:9998/`}></iframe>
+        <div className='h-full flex-[3] p-4 bg-gray-800'>
+          <iframe className="w-full h-full rounded" id="flutterview" src={`${config.host}:9998/`}></iframe>
         </div>
-        <div className={styles.section}>
-          <ParametersList selectedBlock={selectedBlock} />
-        </div>
+        {selectedBlock && <div className={styles.section}>
+          <ParametersList selectedBlock={selectedBlock} onExit={()=>setSelectedBlock(undefined)}/>
+        </div>}
       </div>
     </div>
   );

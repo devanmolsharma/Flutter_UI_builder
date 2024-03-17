@@ -6,7 +6,7 @@ import { RiSettings4Line, RiSettings2Fill } from "react-icons/ri";
 
 
 
-export function ParametersList({ selectedBlock }: ParamtersListProps) {
+export function ParametersList({ selectedBlock, onExit }: ParamtersListProps) {
   const enums: EnumList = json;
 
   function changeProp(id: string, value: null | string) {
@@ -45,7 +45,14 @@ export function ParametersList({ selectedBlock }: ParamtersListProps) {
     parentKey: string | null = null
   ) {
     if (widgetProperties == null) return <div></div>;
-    let jsxCode: any = [];
+    let generalProps: Record<string, JSX.Element[]> = {
+      'enums':[],
+      'toggles':[],
+      'colors':[],
+      'functions':[],
+      'others':[],
+    };
+    let expandableProps: JSX.Element[] = []
 
     widgetProperties.forEach((property) => {
       const propertyKey = parentKey
@@ -56,97 +63,135 @@ export function ParametersList({ selectedBlock }: ParamtersListProps) {
         elClass !== "Widget" &&
         elClass !== "List<Widget>"
       ) {
-        jsxCode.push(
-          <TreeItem key={propertyKey} label={property.name} nodeId={propertyKey || ''}>
-            {renderPropertyInput(property, propertyKey)}
-            {property.type.params && property.type.params.length > 0 && (
-              ParseProps(property.type.params, propertyKey)
-            )}
-          </TreeItem>
-        );
+
+        let child = renderPropertyInput(property, propertyKey);
+
+        if (property.enum) {
+          generalProps['enums'].push(child as any as JSX.Element);
+        }
+        else if (property.type.class === 'bool') {
+          generalProps['toggles'].push(child as any as JSX.Element);
+        }
+        else if (property.name.toLocaleLowerCase().endsWith('color')) {
+          generalProps['colors'].push(child as any as JSX.Element);
+        }
+        else if (property.type.isFunction) {
+          generalProps['functions'].push(child as any as JSX.Element);
+        }
+        else {
+          generalProps['others'].push(child as any as JSX.Element);
+        }
+
+
+        if (property.type.params && property.type.params.length > 0) {
+          expandableProps.push(
+            <TreeItem className="relative" key={propertyKey} label={property.name} nodeId={propertyKey || ''}>
+              {ParseProps(property.type.params, propertyKey)}
+            </TreeItem>)
+        }
       }
     });
 
-    return jsxCode;
+    return [...Object.values(generalProps), <hr className="m-4"></hr>, ...expandableProps];
   }
 
   function renderPropertyInput(property: Property, key: string) {
     const elClass = property.type.class;
-
+  
     let jxList = [];
-
+  
     if (property.enum) {
       jxList.push(
-        <select
-          onChange={(e) =>
-            changeProp(key, property.type.class + "." + e.target.value)
-          }
-        >
-          <option key="None">None/Custom</option>
-          {enums[property.type.class].map((enumVal) => (
-            <option key={enumVal} value={enumVal} selected={property.type.class + "." + enumVal == property.value}>{enumVal}</option>
-          ))}
-        </select>
+        <div className="flex items-center space-x-2">
+          <span>{property.name}:</span>
+          <select
+            onChange={(e) => changeProp(key, property.type.class + "." + e.target.value)}
+            className="border rounded-md p-1 text-black w-32"
+          >
+            <option value="None">None</option>
+            {enums[property.type.class].map((enumVal) => (
+              <option
+                key={enumVal}
+                value={enumVal}
+                selected={property.type.class + "." + enumVal === property.value}
+              >
+                {enumVal}
+              </option>
+            ))}
+          </select>
+        </div>
       );
-      // return jxList;
     }
-
-    if (
-      ["int", "double", "String"].indexOf(property.type.class) != -1
-    ) {
+  
+    if (["int", "double", "String"].indexOf(property.type.class) !== -1) {
       jxList.push(
+        <>
+        <label htmlFor={key}>{property.name}: </label>
         <input
           onChange={(e) => changeProp(key, e.target.value)}
-          id={property.name}
+          id={key}
           type="text"
-          defaultValue={`${property.value || ''}`}
+          placeholder={property.type.class}
+          defaultValue={`${property.value || ""}`}
+          className="border rounded-lg p-1 w-32 m-2"
         />
+        </>
       );
-      return jxList;
     }
-
-    if (property.name.toLowerCase().endsWith('color')) {
-
+  
+    if (property.name.toLowerCase().endsWith("color")) {
       jxList.push(
-        <input
-          onChange={(e) => changeProp(key + '_value', e.target.value.replace('#', '0xff'))}
-          id={property.name}
-          type="color"
-        />
-      )
-      return jxList;
-
+        <div className="flex items-center space-x-2">
+          <label htmlFor={key}>{property.name}:</label>
+          <input
+            onChange={(e) => changeProp(key + "_value", e.target.value.replace("#", "0xff"))}
+            id={key}
+            type="color"
+            className="rounded-full w-8 border h-8"
+          />
+        </div>
+      );
     }
-
-    if (
-      property.type.isFunction
-    ) {
+  
+    if (property.type.isFunction) {
       jxList.push(
-        <input defaultValue={(property.value as string) || ''}
+        <textarea
+          defaultValue={(property.value as string) || ""}
           onChange={(e) => changeProp(key, e.target.value)}
           id={property.name}
-          type="text"
+          className="border rounded-lg p-1 w-[80%] m-1"
+          placeholder={`Do what on ${property.name.match(/[A-Z][a-z]+/g)?.join(' ').toLowerCase()}?`}
         />
       );
-      return jxList;
     }
-
+  
     if (elClass === "bool") {
-      console.log('Boolean');
-
-      jxList.push(<input type="checkbox" onChange={(e) => changeProp(key, e.target.checked ? 'true' : 'false')} />, ` ${property.name}`);
-      return jxList;
+      jxList.push(
+        <div className="flex items-center space-x-2">
+          <input
+            type="checkbox"
+            id={key}
+            onChange={(e) => changeProp(key, e.target.checked ? "true" : "false")}
+            className="rounded-md p-1"
+            placeholder={property.name}
+          />
+          <label htmlFor={key}>{property.name}</label>
+        </div>
+      );
     }
-
+  
+    jxList.push(<br />);
+  
     return jxList;
-
   }
+  
 
   return (
     selectedBlock != null && (
-      <div className="ParametersList">
-        {/* <h1>{selectedBlock.widget.name}</h1> */}
-        <TreeView className="propsView" defaultCollapseIcon={<RiSettings2Fill />} defaultExpandIcon={<RiSettings4Line />}>{ParseProps(selectedBlock.widget.params)}</TreeView>
+      <div className="ParametersList bg-gray-800 h-[100%] w=[100%] text-gray-400 py-6 relative">
+        <div className="absolute top-6 right-4 bg-red-700 p-3 rounded-full text-gray-200 hover:cursor-pointer hover:scale-[1.1]" onClick={() => onExit()}><span className="absolute top-[-2px] right-2">x</span></div>
+        <h1 className="text-lg m-1">Properties</h1>
+        <TreeView className="propsView overflow-x-scroll h-[80vh]" defaultCollapseIcon={<RiSettings2Fill />} defaultExpandIcon={<RiSettings4Line />}>{ParseProps(selectedBlock.widget.params)}</TreeView>
       </div>
     )
   );

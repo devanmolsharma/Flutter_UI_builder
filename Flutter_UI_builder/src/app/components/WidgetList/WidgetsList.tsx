@@ -42,18 +42,20 @@ export function WidgetsList({
 
     return (
       <TreeItem
-        label={`${block.name} - ${block.widget.name}`}
+      label={`${block.name} - ${block.widget.name}`}
+      className={expandedNodes.includes(`${block.name}_${parent}`)?'text-yellow-600':'text-white'}
         onClick={() => {
           onBlockSelected(block);
         }}
         nodeId={`${block.name}_${parent}`}
-        icon={<CgClipboard onClick={
+        icon={<CgClipboard className="hover:scale-[1.1]" onClick={
           () => {copyWidgetCode(block);
           alert('Copied Dart Code to Clipboard')}
         } />}
       >
         {widgetListParams?.map((param) => (
           <TreeItem
+          className="text-white"
             nodeId={parent + block.name + param.name}
             label={param.name}
           >
@@ -61,9 +63,9 @@ export function WidgetsList({
               .filter((child) => child.name == param.name)
               .map((child) => parseBlock(child, block.name))}
             <TreeItem
-              label="add"
+              label="+ Add"
               nodeId={block.name + parent + param.name + "_add_child"}
-              className="widgetPropAdd"
+              className="widgetPropAdd text-green-500"
               onClick={() => {
                 setPropName(param.name);
                 setSelectedBlock(block);
@@ -83,7 +85,7 @@ export function WidgetsList({
             nodeId={parent + block.name + "_" + param.name}
             label={param.name + (param.required ? "*" : "")}
             icon={<IoMdAddCircleOutline />}
-            className="widgetPropAdd"
+            className="text-blue-500"
             onClick={() => {
               setPropName(param.name);
               setSelectedBlock(block);
@@ -105,7 +107,7 @@ export function WidgetsList({
   }
 
   return (
-    <div>
+    <div className="bg-gray-800 h-full text-gray-300 p-4">
       {selectedBlock && (
         <AddWidgetDialog
           onSubmit={(widget) => handleWidgetAddition(widget)}
@@ -114,10 +116,10 @@ export function WidgetsList({
           widgets={widgets}
         />
       )}
-      <button
-        onClick={() => {
+      <button className="bg-green-700 p-2 border-1 absolute top-4 left-20 rounded"
+        onClick={async () =>  {
           let compiled = Compiler.compileBlock(baseBlock);
-          fetch(config.host + ":8080/update", {
+          await fetch(config.host + ":8080/update", {
             method: "post",
             headers: { "Content-type": "application/json" },
             body: JSON.stringify({
