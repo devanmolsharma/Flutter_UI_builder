@@ -3,11 +3,14 @@ import json from '../../../../public/Fetcher/enums.json'
 import { TreeView } from "@mui/x-tree-view/TreeView";
 import { TreeItem } from "@mui/x-tree-view/TreeItem";
 import { RiSettings4Line, RiSettings2Fill } from "react-icons/ri";
+import TabsGroup from "../TabsGroup/TabsGroup";
+import { useState } from "react";
 
 
 
 export function ParametersList({ selectedBlock, onExit }: ParamtersListProps) {
   const enums: EnumList = json;
+  const [propCategory, setPropCategory] = useState<'Values' | 'Colors' | 'Events' | 'Toggles' | 'Inputs'>('Inputs')
 
   function changeProp(id: string, value: null | string) {
     const indices = id.split("_");
@@ -46,13 +49,13 @@ export function ParametersList({ selectedBlock, onExit }: ParamtersListProps) {
   ) {
     if (widgetProperties == null) return <div></div>;
     let generalProps: Record<string, JSX.Element[]> = {
-      'enums':[],
-      'toggles':[],
-      'colors':[],
-      'functions':[],
-      'others':[],
+      'enums': [],
+      'toggles': [],
+      'colors': [],
+      'functions': [],
+      'expandables': [],
+      'others': [],
     };
-    let expandableProps: JSX.Element[] = []
 
     widgetProperties.forEach((property) => {
       const propertyKey = parentKey
@@ -84,22 +87,22 @@ export function ParametersList({ selectedBlock, onExit }: ParamtersListProps) {
 
 
         if (property.type.params && property.type.params.length > 0) {
-          expandableProps.push(
+          generalProps['expandables'].push(
             <TreeItem className="relative" key={propertyKey} label={property.name} nodeId={propertyKey || ''}>
-              {ParseProps(property.type.params, propertyKey)}
+              {ParseProps(property.type.params, propertyKey) as any}
             </TreeItem>)
         }
       }
     });
 
-    return [...Object.values(generalProps), <hr className="m-4"></hr>, ...expandableProps];
+    return generalProps;
   }
 
   function renderPropertyInput(property: Property, key: string) {
     const elClass = property.type.class;
-  
+
     let jxList = [];
-  
+
     if (property.enum) {
       jxList.push(
         <div className="flex items-center space-x-2">
@@ -122,23 +125,23 @@ export function ParametersList({ selectedBlock, onExit }: ParamtersListProps) {
         </div>
       );
     }
-  
+
     if (["int", "double", "String"].indexOf(property.type.class) !== -1) {
       jxList.push(
         <>
-        <label htmlFor={key}>{property.name}: </label>
-        <input
-          onChange={(e) => changeProp(key, e.target.value)}
-          id={key}
-          type="text"
-          placeholder={property.type.class}
-          defaultValue={`${property.value || ""}`}
-          className="border rounded-lg p-1 w-32 m-2"
-        />
+          <label htmlFor={key}>{property.name}: </label>
+          <input
+            onChange={(e) => changeProp(key, e.target.value)}
+            id={key}
+            type="text"
+            placeholder={property.type.class}
+            defaultValue={`${property.value || ""}`}
+            className="border rounded-lg p-1 w-32 m-2 text-black"
+          />
         </>
       );
     }
-  
+
     if (property.name.toLowerCase().endsWith("color")) {
       jxList.push(
         <div className="flex items-center space-x-2">
@@ -152,19 +155,19 @@ export function ParametersList({ selectedBlock, onExit }: ParamtersListProps) {
         </div>
       );
     }
-  
+
     if (property.type.isFunction) {
       jxList.push(
         <textarea
           defaultValue={(property.value as string) || ""}
           onChange={(e) => changeProp(key, e.target.value)}
           id={property.name}
-          className="border rounded-lg p-1 w-[80%] m-1"
+          className="border rounded-lg p-1 w-[80%] m-1 text-black"
           placeholder={`Do what on ${property.name.match(/[A-Z][a-z]+/g)?.join(' ').toLowerCase()}?`}
         />
       );
     }
-  
+
     if (elClass === "bool") {
       jxList.push(
         <div className="flex items-center space-x-2">
@@ -179,19 +182,22 @@ export function ParametersList({ selectedBlock, onExit }: ParamtersListProps) {
         </div>
       );
     }
-  
-    jxList.push(<br />);
-  
+
     return jxList;
   }
-  
+
+  const typeMap = { 'Values': 'enums', 'Colors': 'colors', 'Events': 'functions', 'Toggles': 'toggles', 'Inputs': 'others' }
+  let props = ParseProps(selectedBlock.widget.params) as any;
 
   return (
     selectedBlock != null && (
       <div className="ParametersList bg-gray-800 h-[100%] w=[100%] text-gray-400 py-6 relative">
         <div className="absolute top-6 right-4 bg-red-700 p-3 rounded-full text-gray-200 hover:cursor-pointer hover:scale-[1.1]" onClick={() => onExit()}><span className="absolute top-[-2px] right-2">x</span></div>
         <h1 className="text-lg m-1">Properties</h1>
-        <TreeView className="propsView overflow-x-scroll h-[80vh]" defaultCollapseIcon={<RiSettings2Fill />} defaultExpandIcon={<RiSettings4Line />}>{ParseProps(selectedBlock.widget.params)}</TreeView>
+        <TabsGroup names={['Inputs','Values', 'Colors', 'Events', 'Toggles']} onChange={(newTab) => { setPropCategory(newTab as "Values" | "Colors" | "Events" | "Toggles" | "Inputs") }} />
+        <TreeView className="propsView overflow-x-scroll h-[80vh]" defaultCollapseIcon={<RiSettings2Fill />} defaultExpandIcon={<RiSettings4Line />}>
+          {props[typeMap[propCategory]].map((E:any)=><div>{E}</div>)}
+        </TreeView>
       </div>
     )
   );

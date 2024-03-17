@@ -7,7 +7,7 @@ class Block {
 
   constructor(widget: Widget, name = "", children?: Block[]) {
     this.name = name;
-    this.widget = widget;
+    this.widget = structuredClone(widget);
     this.id = Block.counter;
 
     if (children) {

@@ -42,20 +42,22 @@ export function WidgetsList({
 
     return (
       <TreeItem
-      label={`${block.name} - ${block.widget.name}`}
-      className={expandedNodes.includes(`${block.name}_${parent}`)?'text-yellow-600':'text-white'}
+        label={`${block.name} - ${block.widget.name}`}
+        className={expandedNodes.includes(`${block.name}_${parent}`) ? 'text-yellow-600' : 'text-white'}
         onClick={() => {
           onBlockSelected(block);
         }}
-        nodeId={`${block.name}_${parent}`}
+        nodeId={`${block.name}_${parent}_${block.widget.name}`}
         icon={<CgClipboard className="hover:scale-[1.1]" onClick={
-          () => {copyWidgetCode(block);
-          alert('Copied Dart Code to Clipboard')}
+          () => {
+            copyWidgetCode(block);
+            alert('Copied Dart Code to Clipboard')
+          }
         } />}
       >
-        {widgetListParams?.map((param) => (
+        {widgetListParams?.map((param, i) => (
           <TreeItem
-          className="text-white"
+            className="text-white"
             nodeId={parent + block.name + param.name}
             label={param.name}
           >
@@ -116,25 +118,24 @@ export function WidgetsList({
           widgets={widgets}
         />
       )}
-      <button className="bg-green-700 p-2 border-1 absolute top-4 left-20 rounded"
-        onClick={async () =>  {
+      <button className="bg-green-700 p-2 border-1 absolute top-4 right-20 rounded"
+        onClick={async () => {
           let compiled = Compiler.compileBlock(baseBlock);
           await fetch(config.host + ":8080/update", {
             method: "post",
             headers: { "Content-type": "application/json" },
             body: JSON.stringify({
               newCode: compiled,
+              // useAI: false,
             }),
           });
 
-          setTimeout(() => {
-            fetch(config.host + ":8080/render").then((_) => {
-              var iframe = document.getElementById(
-                "flutterview"
-              ) as HTMLIFrameElement;
-              iframe.src = iframe.src;
-            });
-          }, 2000);
+          fetch(config.host + ":8080/render").then((_) => {
+            var iframe = document.getElementById(
+              "flutterview"
+            ) as HTMLIFrameElement;
+            iframe.src = iframe.src;
+          });
         }}
       >
         Compile!

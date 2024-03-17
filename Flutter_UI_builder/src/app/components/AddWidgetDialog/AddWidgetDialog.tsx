@@ -8,11 +8,13 @@ export default function AddWidgetDialog({ onSubmit, show, setShow, widgets }: Ad
 
   function handleCancel() {
     setFilterQuery('');
+    (document.getElementById('widgetsInput') as HTMLInputElement).value=''
     setShow(false);
   }
 
   function handleSubmit(name:string) {
     setFilterQuery('');
+    (document.getElementById('widgetsInput') as HTMLInputElement).value=''
     onSubmit(name)
     setShow(false);
   }
