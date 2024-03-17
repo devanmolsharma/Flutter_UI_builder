@@ -1,4 +1,5 @@
 const snippets = require('./snippets.js')
+const AICoder = require('./AICoder.js').AICoder;
 const express = require('express');
 const { spawn, exec } = require("child_process");
 var cors = require('cors');
@@ -61,13 +62,16 @@ app.get('/build/:type', (req, res) => {
     });
 });
 
-app.post('/update', (req, res) => {
+app.post('/update', async (req, res) =>  {
     console.log(JSON.stringify(req.query));
 
     let code = snippets.pre + req.body.newCode + snippets.post;
+    code = await AICoder.processCode(code)
     fs.writeFile('./screen_renderer/lib/main.dart', code, () => {
         console.log('Written main.dart');
-        res.end();
+        res.end(JSON.stringify({
+            newcode:code
+        }));
     })
 
 });
