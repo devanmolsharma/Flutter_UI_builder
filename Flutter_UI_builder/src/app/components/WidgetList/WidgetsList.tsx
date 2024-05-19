@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import "./widgetList.css";
 import Block from "@/app/Block";
 import AddWidgetDialog from "../AddWidgetDialog/AddWidgetDialog";
@@ -12,16 +12,24 @@ import { MdOutlineKeyboardArrowRight } from "react-icons/md";
 import { IoMdAddCircleOutline } from "react-icons/io";
 import { CgClipboard } from "react-icons/cg";
 
+type WidgetListProps = {
+  widgets: Widget[];
+  onBlocksChange: (block: Block) => void;
+  onBlockSelected: (block: Block) => void;
+  baseBlock:Block,
+  setBaseBlock:Dispatch<SetStateAction<Block>>
+};
+
 export function WidgetsList({
   widgets,
-  setWidgets,
   onBlockSelected,
+  onBlocksChange,
+  baseBlock,
+  setBaseBlock
 }: WidgetListProps): JSX.Element {
   if (widgets.length <= 0) {
     return <></>;
   }
-
-  let [baseBlock, setBaseBlock] = useState(new Block(widgets.find((v) => v.name == "Scaffold")!, 'Scaffold'));
   let [selectedBlock, setSelectedBlock] = useState<Block>();
   let [propname, setPropName] = useState("");
   let [showDialog, setShowDialog] = useState(true);
@@ -33,8 +41,12 @@ export function WidgetsList({
 
   function copyWidgetCode(block: Block) {
     let code = Compiler.compileBlock(block);
-    navigator.clipboard.writeText(code)
+    navigator.clipboard.writeText(code);
   }
+
+  useEffect(() => {
+    onBlocksChange(baseBlock);
+  }, [baseBlock]);
 
   function parseBlock(block: Block, parent: string = "") {
     let children = block.children;
@@ -43,17 +55,24 @@ export function WidgetsList({
     return (
       <TreeItem
         label={`${block.name} - ${block.widget.name}`}
-        className={expandedNodes.includes(`${block.name}_${parent}`) ? 'text-yellow-600' : 'text-white'}
+        className={
+          expandedNodes.includes(`${block.name}_${parent}`)
+            ? "text-yellow-600"
+            : "text-white"
+        }
         onClick={() => {
           onBlockSelected(block);
         }}
         nodeId={`${block.name}_${parent}_${block.widget.name}`}
-        icon={<CgClipboard className="hover:scale-[1.1]" onClick={
-          () => {
-            copyWidgetCode(block);
-            alert('Copied Dart Code to Clipboard')
-          }
-        } />}
+        icon={
+          <CgClipboard
+            className="hover:scale-[1.1]"
+            onClick={() => {
+              copyWidgetCode(block);
+              alert("Copied Dart Code to Clipboard");
+            }}
+          />
+        }
       >
         {widgetListParams?.map((param, i) => (
           <TreeItem
@@ -118,7 +137,8 @@ export function WidgetsList({
           widgets={widgets}
         />
       )}
-      <button className="bg-green-700 p-2 border-1 absolute top-4 right-20 rounded"
+      <button
+        className="bg-green-700 p-2 border-1 absolute top-4 right-20 rounded"
         onClick={async () => {
           let compiled = Compiler.compileBlock(baseBlock);
           await fetch(config.host + ":8080/update", {
@@ -126,7 +146,7 @@ export function WidgetsList({
             headers: { "Content-type": "application/json" },
             body: JSON.stringify({
               newCode: compiled,
-              // useAI: false,
+              withAI: true,
             }),
           });
 
@@ -138,7 +158,7 @@ export function WidgetsList({
           });
         }}
       >
-        Compile!
+        Compile with AI
       </button>
       <TreeView
         expanded={expandedNodes}

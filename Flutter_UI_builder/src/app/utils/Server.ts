@@ -1,7 +1,7 @@
 import Block from "../Block";
 import Compiler from "./Compiler";
 
-class Server {
+export class Server {
 
     constructor(public serverUrl: string,) { };
 
