@@ -12,7 +12,7 @@ let TabsGroup = ({ names, onChange }: Params) => {
   return <div className="w-[400px] p-2" >
     <div className="relative right-0" >
       <ul className="relative flex flex-wrap p-1 list-none rounded-lg bg-gray-200 text-slate-700" data-tabs="tabs" role="list" >
-        {names.map((name) => <li className={`z-30 flex-auto text-center rounded-lg ${selected == name ? 'selected' : ''}`} >
+        {names.map((name,i) => <li key={i} className={`z-30 flex-auto text-center rounded-lg ${selected == name ? 'selected' : ''}`} >
           <a className="z-30 flex items-center justify-center w-full p-1 mb-0 transition-all ease-in-out border-0 rounded-lg cursor-pointer bg-inherit"
             data-tab-target="" onClick={() => {
               onChange(name);

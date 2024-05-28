@@ -212,7 +212,7 @@ export function ParametersList({ selectedBlock, onExit ,onPropChange}: Paramters
 
   return (
     selectedBlock != null && (
-      <div className="ParametersList bg-gray-800 h-[100%] w=[100%] text-gray-400 py-6 relative">
+      <div className="ParametersList bg-gray-800 md:h-[100%] w=[100%] text-gray-400 py-6 relative">
         <div
           className="absolute top-6 right-4 bg-red-700 p-3 rounded-full text-gray-200 hover:cursor-pointer hover:scale-[1.1]"
           onClick={() => onExit()}
@@ -229,12 +229,12 @@ export function ParametersList({ selectedBlock, onExit ,onPropChange}: Paramters
           }}
         />
         <TreeView
-          className="propsView overflow-x-scroll h-[80vh]"
+          className="propsView overflow-x-scroll max-h-min md:h-[80vh]"
           defaultCollapseIcon={<RiSettings2Fill />}
           defaultExpandIcon={<RiSettings4Line />}
         >
-          {props[typeMap[propCategory]].map((E: any) => (
-            <div>{E}</div>
+          {props[typeMap[propCategory]].map((E: any,i:number) => (
+            <div key={i}>{E}</div>
           ))}
         </TreeView>
       </div>

@@ -4,7 +4,6 @@ import "./widgetList.css";
 import Block from "@/app/Block";
 import AddWidgetDialog from "../AddWidgetDialog/AddWidgetDialog";
 import Compiler from "@/app/utils/Compiler";
-import config from "@/app/config";
 import { TreeView } from "@mui/x-tree-view/TreeView";
 import { TreeItem } from "@mui/x-tree-view/TreeItem";
 import { MdOutlineExpandMore } from "react-icons/md";
@@ -27,14 +26,18 @@ export function WidgetsList({
   baseBlock,
   setBaseBlock
 }: WidgetListProps): JSX.Element {
-  if (widgets.length <= 0) {
-    return <></>;
-  }
   let [selectedBlock, setSelectedBlock] = useState<Block>();
   let [propname, setPropName] = useState("");
   let [showDialog, setShowDialog] = useState(true);
   const [expandedNodes, setExpandedNodes] = useState<string[]>([]);
-
+  
+    useEffect(() => {
+      onBlocksChange(baseBlock);
+    }, [baseBlock]);
+  
+  if (widgets.length <= 0) {
+    return <></>;
+  }
   function toggleExpanded(ids: string[]) {
     setExpandedNodes(ids);
   }
@@ -43,10 +46,6 @@ export function WidgetsList({
     let code = Compiler.compileBlock(block);
     navigator.clipboard.writeText(code);
   }
-
-  useEffect(() => {
-    onBlocksChange(baseBlock);
-  }, [baseBlock]);
 
   function parseBlock(block: Block, parent: string = "") {
     let children = block.children;
@@ -76,6 +75,7 @@ export function WidgetsList({
       >
         {widgetListParams?.map((param, i) => (
           <TreeItem
+          key={i}
             className="text-white"
             nodeId={parent + block.name + param.name}
             label={param.name}
@@ -101,8 +101,9 @@ export function WidgetsList({
               !widgetListParams?.map((param) => param.name).includes(child.name)
           )
           .map((child) => parseBlock(child))}
-        {block.widgetParams(true)?.map((param) => (
+        {block.widgetParams(true)?.map((param,i) => (
           <TreeItem
+          key={i}
             nodeId={parent + block.name + "_" + param.name}
             label={param.name + (param.required ? "*" : "")}
             icon={<IoMdAddCircleOutline />}
@@ -137,29 +138,6 @@ export function WidgetsList({
           widgets={widgets}
         />
       )}
-      <button
-        className="bg-green-700 p-2 border-1 absolute top-4 right-20 rounded"
-        onClick={async () => {
-          let compiled = Compiler.compileBlock(baseBlock);
-          await fetch(config.host + ":8080/update", {
-            method: "post",
-            headers: { "Content-type": "application/json" },
-            body: JSON.stringify({
-              newCode: compiled,
-              withAI: true,
-            }),
-          });
-
-          fetch(config.host + ":8080/render").then((_) => {
-            var iframe = document.getElementById(
-              "flutterview"
-            ) as HTMLIFrameElement;
-            iframe.src = iframe.src;
-          });
-        }}
-      >
-        Compile with AI
-      </button>
       <TreeView
         expanded={expandedNodes}
         defaultCollapseIcon={<MdOutlineExpandMore />}

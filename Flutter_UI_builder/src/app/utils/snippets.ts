@@ -1,4 +1,4 @@
-exports.pre = `
+export const pre = `
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
@@ -31,6 +31,6 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) { return `
 
 
-exports.post =   `;
+export const post =   `;
   }
 }`

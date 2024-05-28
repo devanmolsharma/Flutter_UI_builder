@@ -20,8 +20,8 @@ export default function AddWidgetDialog({ onSubmit, show, setShow, widgets }: Ad
   }
 
   return (
-    <div className={`fixed inset-0 overflow-y-auto ${show ? 'block' : 'hidden'}`}>
-      <div className="flex items-center justify-center min-h-screen">
+    <div className={`fixed inset-0 overflow-y-auto max-w-[100vw] max-h-[100vh] max-md:bg-gray-800 z-[100] ${show ? 'block' : 'hidden'}`}>
+      <div className="flex items-center justify-center min-h-[80vh]">
         <div className="bg-gray-800 rounded-lg text-left shadow-xl transform transition-all sm:max-w-lg w-full">
           <div className="bg-gray-800 p-4 rounded-t-lg">
             <h3 className="text-lg font-semibold">Add Widget</h3>

@@ -1,5 +1,4 @@
 import config from "@/app/config";
-import { Container, NavDropdown, Navbar } from "react-bootstrap";
 
 export default function NavigationBar() {
   return (
@@ -7,10 +6,12 @@ export default function NavigationBar() {
     <div className="container mx-auto">
       <a href="#" className="navbar-brand"></a>
       <div className="relative">
-      <button className="text-white bg-orange-600 p-2 rounded focus:outline-none" onClick={() => {
-        const dropdown = document.getElementById('build-dropdown');
-        dropdown!.classList.toggle('hidden');
-      }}>
+      <button className="text-white bg-orange-600 p-2 rounded focus:outline-none" 
+      // onClick={() => {
+      //   const dropdown = document.getElementById('build-dropdown');
+      //   dropdown!.classList.toggle('hidden');
+      // }}
+      >
         Download
       </button>
       <ul id="build-dropdown" className="absolute hidden bg-white rounded shadow-md py-2 mt-1 w-32 z-20">

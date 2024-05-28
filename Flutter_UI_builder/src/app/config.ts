@@ -1,3 +1,3 @@
 export default {
-    'host':'http://localhost'
+    'host':'http://localhost:8080',
 }

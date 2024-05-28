@@ -36,10 +36,6 @@ class AICoder{
       const res = await fetch('https://api.openai.com/v1/chat/completions', requestOptions);
       const json = await res.json()
       return json.choices[0].message.content;
-      
-      
-
-      
     }
 }
 
