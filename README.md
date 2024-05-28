@@ -3,7 +3,7 @@
 ![screenshot](https://github.com/devanmolsharma/Flutter_UI_builder/raw/main/demos/screenshot.png)
 
 ## Demo
-A devo available at [UI_builder](https://build.anmolsharma.me/)
+A demo available at [UI_builder](https://build.anmolsharma.me/)
 
 ## Introduction
 
